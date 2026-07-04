@@ -1,0 +1,143 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "projects": "Projets",
+    "news": "Actualités",
+    "contact": "Contact",
+    "close": "Fermer"
+  },
+  "hero": {
+    "badge": "Cabinet d'Expertise Environnementale et Sociale",
+    "title1": "Expertise en Études",
+    "titleHighlight": "Environnementales et Sociales",
+    "subtitle": "KARAMON CONSEIL SARL — Votre partenaire pour un développement durable en Afrique de l'Ouest",
+    "cta1": "Nos Services",
+    "cta2": "Contactez-nous"
+  },
+  "about": {
+    "badge": "À propos de nous",
+    "title": "Plus de 8 ans au service de l'environnement en Afrique",
+    "p1": "Fondée à Lomé en 2018, KARAMON CONSEIL SARL est un cabinet d'études environnementales et sociales de premier plan au Togo, intervenant dans toute l'Afrique. Notre mission est d'accompagner les projets de développement dans leur intégration responsable des enjeux environnementaux et sociaux, en conformité avec les standards de la Banque Mondiale, de la BAD et des bailleurs internationaux.",
+    "p2": "Nous disposons d'une équipe pluridisciplinaire d'experts certifiés, couvrant les domaines de l'écologie, de la sociologie, de l'ingénierie environnementale et du droit de l'environnement. Notre engagement envers l'excellence et l'intégrité nous a permis de bâtir une relation de confiance avec nos partenaires institutionnels et privés à travers le continent africain.",
+    "cta": "Découvrir nos services",
+    "statYears": "Années d'expérience",
+    "statProjects": "Projets réalisés",
+    "statExperts": "Experts",
+    "statCountries": "Pays d'intervention"
+  },
+  "services": {
+    "badge": "Nos Services",
+    "title": "Des solutions environnementales complètes",
+    "subtitle": "Nous offrons une gamme complète de services d'expertise environnementale et sociale pour accompagner vos projets à chaque étape.",
+    "eies": {
+      "title": "Études d'Impact Environnemental et Social (EIES)",
+      "desc": "Évaluation complète des impacts environnementaux et sociaux des projets de développement, en conformité avec les normes nationales et internationales (Banque Mondiale, IFC, BAD). Notre approche intègre des enquêtes de terrain approfondies, des consultations publiques et des plans de gestion adaptés."
+    },
+    "pges": {
+      "title": "Plan de Gestion Environnemental et Social (PGES)",
+      "desc": "Élaboration de plans de gestion environnemental et social détaillés, incluant les mesures d'atténuation, les cadres de surveillance et les mécanismes de suivi. Nous assurons l'intégration des exigences de sauvegarde dans chaque phase du projet."
+    },
+    "par": {
+      "title": "Plan d'Action de Réinstallation (PAR)",
+      "desc": "Conception et mise en œuvre de plans d'action de réinstallation pour les populations affectées, incluant les cadres de compensation, la restauration des moyens de subsistance et les mécanismes de doléances. Notre approche garantit une réinstallation juste et équitable."
+    },
+    "audit": {
+      "title": "Audit Environnemental",
+      "desc": "Audits environnementaux approfondis pour la vérification de la conformité réglementaire, l'évaluation des performances environnementales et la due diligence. Nos audits couvrent les secteurs miniers, industriels, agricoles et infrastructurels."
+    },
+    "bio": {
+      "title": "Études Biodiversité",
+      "desc": "Évaluations de la biodiversité, études des écosystèmes et inventaires de la flore et de la faune. Nous utilisons des méthodologies scientifiques reconnues pour cartographier et évaluer la diversité biologique des zones d'intervention."
+    },
+    "formation": {
+      "title": "Formation et Assistance Technique",
+      "desc": "Programmes de renforcement des capacités, formations spécialisées et assistance technique pour les institutions, les entreprises et les collectivités. Nos formations couvrent l'évaluation environnementale, la gestion des risques et le développement durable."
+    }
+  },
+  "projects": {
+    "badge": "Nos Projets",
+    "title": "Des réalisations à travers l'Afrique",
+    "subtitle": "Découvrez une sélection de nos projets d'études environnementales et sociales menés dans plusieurs pays d'Afrique de l'Ouest.",
+    "all": "Tous",
+    "ongoing": "En Cours",
+    "completed": "Terminé",
+    "ongoingBadge": "En cours",
+    "completedBadge": "Terminé",
+    "viewDetails": "Voir les détails",
+    "noResults": "Aucun projet trouvé pour ce filtre.",
+    "backToProjects": "Retour aux projets",
+    "seeAllProjects": "Voir tous les projets",
+    "location": "Localisation",
+    "client": "Client",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "description": "Description du projet",
+    "actions": "Actions menées",
+    "results": "Résultats",
+    "inProgress": "En cours"
+  },
+  "news": {
+    "badge": "Nos Actualités",
+    "title": "Restez informé de nos activités",
+    "subtitle": "Suivez les dernières nouvelles, événements et publications de KARAMON CONSEIL SARL.",
+    "readMore": "Lire la suite",
+    "backToNews": "Retour aux actualités",
+    "seeAllNews": "Voir toutes les actualités"
+  },
+  "contact": {
+    "badge": "Contact",
+    "title": "Contactez-nous",
+    "subtitle": "Vous avez un projet ou une question ? N'hésitez pas à nous contacter. Notre équipe est à votre écoute.",
+    "info": "Informations de contact",
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "Email",
+    "area": "Zone d'intervention",
+    "areaValue": "Toute l'Afrique",
+    "followUs": "Suivez-nous :",
+    "name": "Nom complet",
+    "namePlaceholder": "Votre nom complet",
+    "emailLabel": "Email",
+    "emailPlaceholder": "votre@email.com",
+    "phonePlaceholder": "+228 XX XX XX XX",
+    "subject": "Sujet",
+    "subjectPlaceholder": "Sélectionnez un sujet",
+    "message": "Message",
+    "messagePlaceholder": "Décrivez votre projet ou votre demande...",
+    "send": "Envoyer le message",
+    "sending": "Envoi en cours...",
+    "nameRequired": "Le nom doit contenir au moins 2 caractères.",
+    "emailInvalid": "Veuillez fournir une adresse email valide.",
+    "messageRequired": "Le message doit contenir au moins 10 caractères.",
+    "subjectRequired": "Veuillez sélectionner un sujet.",
+    "messageSent": "Message envoyé",
+    "error": "Erreur",
+    "serverError": "Impossible de se connecter au serveur.",
+    "subjects": {
+      "eies": "Études d'impact (EIES)",
+      "pges": "Plan de Gestion (PGES)",
+      "par": "Plan de Réinstallation (PAR)",
+      "audit": "Audit Environnemental",
+      "bio": "Études Biodiversité",
+      "formation": "Formation & Assistance",
+      "other": "Autre"
+    },
+    "successTitle": "Message envoyé !",
+    "successMessage": "Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.",
+    "sendAnother": "Envoyer un autre message"
+  },
+  "footer": {
+    "description": "Cabinet d'expertise en études environnementales et sociales, au service d'un développement durable en Afrique de l'Ouest.",
+    "quickLinks": "Liens rapides",
+    "services": "Nos Services",
+    "rights": "Tous droits réservés."
+  },
+  "categories": {
+    "eies": "EIES",
+    "pges": "PGES",
+    "par": "PAR",
+    "audit": "Audit",
+    "autre": "Autre"
+  }
+}
