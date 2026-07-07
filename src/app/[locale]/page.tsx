@@ -364,23 +364,16 @@ export default function HomePage() {
           {/* Logo */}
           <button
             onClick={() => scrollTo("#accueil")}
-            className="flex items-center gap-3 group"
+            className="flex items-center group"
           >
             <Image
               src="/images/logo.png"
               alt="KARAMON CONSEIL"
-              width={44}
-              height={44}
-              className="rounded-full border-2 border-white/30 group-hover:border-white/60 transition-colors"
+              width={296}
+              height={72}
+              className="h-12 md:h-16 w-auto"
+              priority
             />
-            <div className="flex flex-col">
-              <span className="text-white font-bold text-sm md:text-base tracking-wide font-[family-name:var(--font-playfair)]">
-                KARAMON CONSEIL
-              </span>
-              <span className="text-white/70 text-[10px] md:text-xs tracking-widest uppercase">
-                SARL
-              </span>
-            </div>
           </button>
 
           {/* Desktop links + language switcher */}
@@ -1349,22 +1342,14 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
             <div>
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center mb-4">
                 <Image
                   src="/images/logo.png"
                   alt="KARAMON CONSEIL"
-                  width={40}
-                  height={40}
-                  className="rounded-full border-2 border-white/30"
+                  width={296}
+                  height={72}
+                  className="h-14 w-auto"
                 />
-                <div>
-                  <h3 className="font-bold text-base font-[family-name:var(--font-playfair)]">
-                    KARAMON CONSEIL
-                  </h3>
-                  <span className="text-white/60 text-xs tracking-widest uppercase">
-                    SARL
-                  </span>
-                </div>
               </div>
               <p className="text-white/70 text-sm leading-relaxed text-justify">
                 {t("footer.description")}
