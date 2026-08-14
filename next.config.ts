@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  images: {
+    qualities: [75, 90],
+  },
 };
 
 export default withNextIntl(nextConfig);

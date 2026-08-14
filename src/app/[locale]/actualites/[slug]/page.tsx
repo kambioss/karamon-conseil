@@ -2,7 +2,7 @@ import { getActualiteBySlug } from '@/lib/data'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Calendar, ArrowLeft } from 'lucide-react'
+import { Calendar, ArrowLeft, ChevronRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -20,13 +20,20 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero image */}
+      {/* Ambient backdrop */}
       {actualite.image && (
-        <div className="relative h-72 sm:h-96 lg:h-[28rem]">
-          <Image src={actualite.image} alt={actualite.title} fill className="object-cover" priority />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-          <div className="absolute top-6 left-6 z-10">
-            <Link href={`/${locale}/#actualites`}>
+        <div className="relative h-56 sm:h-64 lg:h-72 overflow-hidden bg-primary">
+          <Image
+            src={actualite.image}
+            alt=""
+            aria-hidden
+            fill
+            sizes="100vw"
+            className="object-cover scale-110 blur-2xl opacity-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-background" />
+          <div className="absolute top-20 md:top-24 left-6 z-10 animate-in fade-in slide-in-from-left-4 duration-700">
+            <Link href={`/${locale}/actualites`}>
               <Button variant="secondary" size="sm" className="bg-white/90 hover:bg-white backdrop-blur-sm gap-2">
                 <ArrowLeft className="h-4 w-4" />
                 {t('news.backToNews')}
@@ -37,10 +44,31 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
       )}
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div
+        className={`max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 ${
+          actualite.image ? "" : "pt-28 md:pt-32"
+        }`}
+      >
+        {/* Framed, correctly-sized image */}
+        {actualite.image && (
+          <div className="relative -mt-28 sm:-mt-32 lg:-mt-36 mb-8 animate-in fade-in zoom-in-95 duration-700">
+            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border">
+              <Image
+                src={actualite.image}
+                alt={actualite.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 896px"
+                quality={90}
+                className="object-cover"
+                priority
+              />
+            </div>
+          </div>
+        )}
+
         {!actualite.image && (
           <div className="mb-6">
-            <Link href={`/${locale}/#actualites`}>
+            <Link href={`/${locale}/actualites`}>
               <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="h-4 w-4" />
                 {t('news.backToNews')}
@@ -49,7 +77,26 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
           </div>
         )}
 
-        <div className="flex items-center gap-3 mb-4">
+        {/* Breadcrumb */}
+        <nav
+          className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4 animate-in fade-in duration-700"
+          style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}
+        >
+          <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
+            {t('nav.home')}
+          </Link>
+          <ChevronRight className="h-3 w-3" />
+          <Link href={`/${locale}/actualites`} className="hover:text-foreground transition-colors">
+            {t('nav.news')}
+          </Link>
+          <ChevronRight className="h-3 w-3" />
+          <span className="text-foreground/70 line-clamp-1">{actualite.title}</span>
+        </nav>
+
+        <div
+          className="flex items-center gap-3 mb-4 animate-in fade-in slide-in-from-bottom-2 duration-700"
+          style={{ animationDelay: '150ms', animationFillMode: 'backwards' }}
+        >
           {actualite.category && (
             <Badge className="bg-terracotta text-terracotta-foreground border-terracotta">
               {actualite.category}
@@ -65,7 +112,10 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] leading-tight mb-8">
+        <h1
+          className="text-3xl sm:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] leading-tight mb-8 animate-in fade-in slide-in-from-bottom-2 duration-700"
+          style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}
+        >
           {actualite.title}
         </h1>
 
@@ -78,7 +128,7 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
         <Separator className="my-10" />
 
         <div className="text-center">
-          <Link href={`/${locale}/#actualites`}>
+          <Link href={`/${locale}/actualites`}>
             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
               <ArrowLeft className="h-4 w-4" />
               {t('news.seeAllNews')}

@@ -11,10 +11,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations, useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
 import {
-  Menu,
-  X,
   FileSearch,
   Shield,
   Home,
@@ -25,11 +22,10 @@ import {
   Phone,
   Mail,
   ChevronDown,
-  ExternalLink,
   Calendar,
-  User,
   Building2,
   ArrowRight,
+  ArrowUpRight,
   CheckCircle2,
   Clock,
   Facebook,
@@ -47,29 +43,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-  SheetClose,
-} from "@/components/ui/sheet";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 /* ─── Types ─── */
 interface Project {
@@ -189,13 +169,8 @@ function AnimatedCounter({
 export default function HomePage() {
   const t = useTranslations();
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [actualites, setActualites] = useState<Actualite[]>([]);
-  const [projectFilter, setProjectFilter] = useState("tous");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -207,15 +182,6 @@ export default function HomePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSuccess, setFormSuccess] = useState(false);
   const { toast } = useToast();
-
-  // Nav links built from translations
-  const NAV_LINKS = [
-    { label: t("nav.home"), href: "#accueil" },
-    { label: t("nav.services"), href: "#services" },
-    { label: t("nav.projects"), href: "#projets" },
-    { label: t("nav.news"), href: "#actualites" },
-    { label: t("nav.contact"), href: "#contact" },
-  ];
 
   // Services built from translations
   const services = SERVICES_KEYS.map((key, i) => ({
@@ -232,26 +198,6 @@ export default function HomePage() {
     { value: 10, suffix: "+", label: t("about.statExperts") },
     { value: 8, suffix: "", label: t("about.statCountries") },
   ];
-
-  // Language switcher
-  function switchLocale(newLocale: string) {
-    const segments = pathname.split("/");
-    segments[1] = newLocale;
-    router.push(segments.join("/"));
-  }
-
-  // Scroll listener — detect when past hero
-  useEffect(() => {
-    const handleScroll = () => {
-      const hero = document.getElementById("accueil");
-      if (hero) {
-        setScrolled(window.scrollY > hero.offsetHeight - 80);
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Fetch data
   useEffect(() => {
@@ -272,16 +218,9 @@ export default function HomePage() {
 
   // Smooth scroll handler
   const scrollTo = useCallback((href: string) => {
-    setMobileOpen(false);
     const el = document.querySelector(href);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   }, []);
-
-  // Filter projects
-  const filteredProjects =
-    projectFilter === "tous"
-      ? projects
-      : projects.filter((p) => p.status === projectFilter);
 
   // Contact form submit
   const handleSubmit = async (e: FormEvent) => {
@@ -351,131 +290,7 @@ export default function HomePage() {
   const dateLocale = locale === "fr" ? "fr-FR" : "en-US";
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* ═══════════ NAVBAR ═══════════ */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "bg-primary/95 backdrop-blur-md shadow-lg"
-            : "bg-transparent"
-        }`}
-      >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <button
-            onClick={() => scrollTo("#accueil")}
-            className="flex items-center group"
-          >
-            <Image
-              src="/images/logo.png"
-              alt="KARAMON CONSEIL"
-              width={296}
-              height={72}
-              className="h-12 md:h-16 w-auto"
-              priority
-            />
-          </button>
-
-          {/* Desktop links + language switcher */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => scrollTo(link.href)}
-                className="text-white/90 hover:text-white hover:bg-white/10 px-4 py-2 rounded-lg text-sm font-medium transition-all"
-              >
-                {link.label}
-              </button>
-            ))}
-            {/* Language switcher */}
-            <div className="flex items-center gap-1 ml-3 border-l border-white/20 pl-3">
-              <button
-                onClick={() => switchLocale("fr")}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                  locale === "fr"
-                    ? "bg-white/20 text-white"
-                    : "text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                FR
-              </button>
-              <button
-                onClick={() => switchLocale("en")}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                  locale === "en"
-                    ? "bg-white/20 text-white"
-                    : "text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                EN
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile menu */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-white hover:bg-white/10"
-              >
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="bg-primary text-white w-72">
-              <div className="flex flex-col gap-2 mt-8">
-                <SheetClose asChild>
-                  <Button
-                    variant="ghost"
-                    className="text-white hover:bg-white/10 justify-start"
-                  >
-                    <X className="mr-2 h-5 w-5" />
-                    {t("nav.close")}
-                  </Button>
-                </SheetClose>
-                <Separator className="bg-white/20 my-2" />
-                {NAV_LINKS.map((link) => (
-                  <SheetClose asChild key={link.href}>
-                    <button
-                      onClick={() => scrollTo(link.href)}
-                      className="text-white/90 hover:text-white hover:bg-white/10 px-4 py-3 rounded-lg text-base font-medium transition-all text-left"
-                    >
-                      {link.label}
-                    </button>
-                  </SheetClose>
-                ))}
-                <Separator className="bg-white/20 my-2" />
-                {/* Mobile language switcher */}
-                <div className="flex items-center gap-2 px-4">
-                  <button
-                    onClick={() => switchLocale("fr")}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      locale === "fr"
-                        ? "bg-white/20 text-white"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
-                    }`}
-                  >
-                    Français
-                  </button>
-                  <button
-                    onClick={() => switchLocale("en")}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                      locale === "en"
-                        ? "bg-white/20 text-white"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
-                    }`}
-                  >
-                    English
-                  </button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </nav>
-      </header>
-
+    <>
       {/* ═══════════ HERO ═══════════ */}
       <section
         id="accueil"
@@ -487,10 +302,12 @@ export default function HomePage() {
             src="/images/hero-bg.png"
             alt="African landscape"
             fill
-            className="object-cover"
             priority
+            sizes="100vw"
+            className="object-cover animate-ken-burns"
           />
           <div className="hero-gradient absolute inset-0" />
+          <div className="hero-gradient-bottom absolute inset-0" />
         </div>
 
         {/* Content */}
@@ -503,34 +320,58 @@ export default function HomePage() {
             <Badge className="bg-terracotta text-terracotta-foreground border-terracotta mb-6 px-4 py-1.5 text-sm">
               {t("hero.badge")}
             </Badge>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-playfair)] mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-playfair)] mb-6 drop-shadow-md">
               {t("hero.title1")}
               <br />
               <span className="text-terracotta">
                 {t("hero.titleHighlight")}
               </span>
             </h1>
-            <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-sm">
               {t("hero.subtitle")}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                onClick={() => scrollTo("#services")}
-                className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg"
-              >
-                {t("hero.cta1")}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => scrollTo("#contact")}
-                className="border-white/40 text-white hover:bg-white/10 text-base px-8 py-6 rounded-xl bg-transparent"
-              >
-                {t("hero.cta2")}
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  size="lg"
+                  onClick={() => scrollTo("#services")}
+                  className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg w-full sm:w-auto"
+                >
+                  {t("hero.cta1")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => scrollTo("#contact")}
+                  className="border-white/40 text-white hover:bg-white/10 text-base px-8 py-6 rounded-xl bg-white/5 backdrop-blur-sm w-full sm:w-auto"
+                >
+                  {t("hero.cta2")}
+                </Button>
+              </motion.div>
             </div>
+
+            {/* Quick trust stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-white/85"
+            >
+              {STATS.slice(0, 3).map((stat) => (
+                <div key={stat.label} className="flex items-baseline gap-1.5">
+                  <span className="text-xl md:text-2xl font-bold text-terracotta font-[family-name:var(--font-playfair)]">
+                    {stat.value}
+                    {stat.suffix}
+                  </span>
+                  <span className="text-xs md:text-sm text-white/70">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
 
@@ -588,32 +429,87 @@ export default function HomePage() {
             </FadeInSection>
 
             <FadeInSection delay={0.2}>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <Image
-                  src="/images/services.png"
-                  alt="KARAMON CONSEIL team"
-                  width={700}
-                  height={400}
-                  className="w-full h-auto object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+              <div className="relative">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border group">
+                  <Image
+                    src="/images/services.png"
+                    alt="KARAMON CONSEIL team"
+                    width={700}
+                    height={400}
+                    className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                </div>
+                {/* Floating stat card */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="absolute -bottom-6 -left-6 bg-card border border-border rounded-xl shadow-xl px-5 py-4 flex items-center gap-3"
+                >
+                  <div className="w-11 h-11 rounded-lg bg-terracotta/15 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="h-6 w-6 text-terracotta" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold text-primary leading-none font-[family-name:var(--font-playfair)]">
+                      {STATS[0].value}
+                      {STATS[0].suffix}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {STATS[0].label}
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             </FadeInSection>
           </div>
 
           <FadeInSection delay={0.3}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 md:mt-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 md:mt-24">
               {STATS.map((stat, i) => (
-                <div
+                <motion.div
                   key={i}
+                  whileHover={{ y: -4 }}
                   className="text-center p-6 bg-card/95 rounded-xl border border-border shadow-sm hover:shadow-md transition-shadow backdrop-blur-sm"
                 >
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                   <p className="text-muted-foreground text-sm mt-2 font-medium">
                     {stat.label}
                   </p>
-                </div>
+                </motion.div>
               ))}
+            </div>
+          </FadeInSection>
+
+          {/* Trusted by */}
+          <FadeInSection delay={0.4}>
+            <div className="mt-14 md:mt-16 flex flex-col items-center gap-4">
+              <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                {t("about.trustedBy")}
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {(locale === "fr"
+                  ? [
+                      "Banque mondiale",
+                      "Banque Africaine de Développement",
+                      "UEMOA",
+                      "BIDC",
+                    ]
+                  : [
+                      "World Bank",
+                      "African Development Bank",
+                      "UEMOA",
+                      "EBID",
+                    ]
+                ).map((partner) => (
+                  <span
+                    key={partner}
+                    className="px-4 py-1.5 rounded-full border border-border bg-card/80 text-xs sm:text-sm text-foreground/80 font-medium"
+                  >
+                    {partner}
+                  </span>
+                ))}
+              </div>
             </div>
           </FadeInSection>
         </div>
@@ -735,27 +631,9 @@ export default function HomePage() {
             </p>
           </FadeInSection>
 
-          <FadeInSection>
-            <Tabs
-              value={projectFilter}
-              onValueChange={setProjectFilter}
-              className="mb-8"
-            >
-              <TabsList className="mx-auto flex w-fit">
-                <TabsTrigger value="tous">{t("projects.all")}</TabsTrigger>
-                <TabsTrigger value="en-cours">
-                  {t("projects.ongoing")}
-                </TabsTrigger>
-                <TabsTrigger value="termine">
-                  {t("projects.completed")}
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </FadeInSection>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
+              {projects.slice(0, 6).map((project) => (
                 <motion.div
                   key={project.id}
                   layout
@@ -775,10 +653,16 @@ export default function HomePage() {
                             src={project.image}
                             alt={project.title}
                             fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                         )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/45 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300">
+                          <div className="w-11 h-11 rounded-full bg-white/95 flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                            <ArrowUpRight className="h-5 w-5 text-primary" />
+                          </div>
+                        </div>
                         <div className="absolute top-3 left-3 flex gap-2">
                           <Badge
                             variant={
@@ -846,10 +730,23 @@ export default function HomePage() {
             </AnimatePresence>
           </div>
 
-          {filteredProjects.length === 0 && (
+          {projects.length === 0 ? (
             <div className="text-center text-muted-foreground py-12">
               {t("projects.noResults")}
             </div>
+          ) : (
+            <FadeInSection delay={0.2} className="text-center mt-10">
+              <Link href={`/${locale}/projets`}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-primary/30 hover:bg-primary hover:text-primary-foreground gap-2"
+                >
+                  {t("projects.seeAllProjects")}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </FadeInSection>
           )}
         </div>
       </section>
@@ -878,60 +775,115 @@ export default function HomePage() {
             </p>
           </FadeInSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {actualites.map((actu, i) => (
-              <FadeInSection key={actu.id} delay={i * 0.1}>
-                <Link
-                  href={`/${locale}/actualites/${actu.slug}`}
-                  className="block h-full"
-                >
-                  <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card group">
-                    <div className="relative h-48 overflow-hidden">
-                      {actu.image && (
-                        <Image
-                          src={actu.image}
-                          alt={actu.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      )}
-                      <div className="absolute top-3 left-3">
-                        <Badge className="bg-terracotta text-terracotta-foreground border-terracotta">
-                          {actu.category}
-                        </Badge>
-                      </div>
-                    </div>
-                    <CardContent className="p-5">
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {new Date(actu.createdAt).toLocaleDateString(
-                          dateLocale,
-                          {
-                            year: "numeric",
-                            month: "long",
-                            day: "numeric",
-                          },
+          {actualites.length > 0 && (
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
+              {/* Left: compact list of other news */}
+              <div className="lg:col-span-2 order-2 lg:order-1 flex flex-col gap-2">
+                {actualites.slice(1, 5).map((actu, i) => (
+                  <FadeInSection key={actu.id} delay={i * 0.08}>
+                    <Link
+                      href={`/${locale}/actualites/${actu.slug}`}
+                      className="flex items-center gap-4 p-3 rounded-xl border border-transparent hover:border-border hover:bg-card transition-all duration-300 group"
+                    >
+                      <div className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-lg overflow-hidden shrink-0 bg-muted">
+                        {actu.image && (
+                          <Image
+                            src={actu.image}
+                            alt={actu.title}
+                            fill
+                            sizes="96px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
                         )}
                       </div>
-                      <h3 className="font-semibold text-foreground mb-2 leading-snug line-clamp-2 text-sm">
-                        {actu.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm leading-relaxed line-clamp-3 mb-4 text-justify">
-                        {actu.excerpt}
-                      </p>
-                      <Button
-                        variant="ghost"
-                        className="text-primary hover:text-primary/80 p-0 h-auto text-sm font-medium"
-                      >
-                        {t("news.readMore")}
-                        <ArrowRight className="ml-1 h-3.5 w-3.5" />
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </FadeInSection>
-            ))}
-          </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1.5">
+                          <Calendar className="h-3.5 w-3.5 shrink-0" />
+                          {new Date(actu.createdAt).toLocaleDateString(
+                            dateLocale,
+                            { year: "numeric", month: "long", day: "numeric" },
+                          )}
+                        </div>
+                        <h3 className="font-semibold text-foreground text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                          {actu.title}
+                        </h3>
+                      </div>
+                      <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shrink-0" />
+                    </Link>
+                  </FadeInSection>
+                ))}
+
+                <FadeInSection delay={0.3} className="mt-3">
+                  <Link href={`/${locale}/actualites`}>
+                    <Button
+                      variant="outline"
+                      className="w-full sm:w-auto gap-2 border-primary/30 hover:bg-primary hover:text-primary-foreground"
+                    >
+                      {t("news.seeAllNews")}
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </FadeInSection>
+              </div>
+
+              {/* Right: large featured news */}
+              <div className="lg:col-span-3 order-1 lg:order-2">
+                <FadeInSection>
+                  <Link
+                    href={`/${locale}/actualites/${actualites[0].slug}`}
+                    className="block h-full"
+                  >
+                    <Card className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 bg-card group">
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        {actualites[0].image && (
+                          <Image
+                            src={actualites[0].image}
+                            alt={actualites[0].title}
+                            fill
+                            sizes="(max-width: 1024px) 100vw, 60vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        )}
+                        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/40 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300">
+                          <div className="w-12 h-12 rounded-full bg-white/95 flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                            <ArrowUpRight className="h-6 w-6 text-primary" />
+                          </div>
+                        </div>
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-terracotta text-terracotta-foreground border-terracotta">
+                            {actualites[0].category}
+                          </Badge>
+                        </div>
+                      </div>
+                      <CardContent className="p-6 md:p-8">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {new Date(actualites[0].createdAt).toLocaleDateString(
+                            dateLocale,
+                            { year: "numeric", month: "long", day: "numeric" },
+                          )}
+                        </div>
+                        <h3 className="font-bold text-foreground mb-3 leading-snug text-xl md:text-2xl font-[family-name:var(--font-playfair)] group-hover:text-primary transition-colors">
+                          {actualites[0].title}
+                        </h3>
+                        <p className="text-muted-foreground leading-relaxed line-clamp-3 mb-5 text-justify">
+                          {actualites[0].excerpt}
+                        </p>
+                        <Button
+                          variant="ghost"
+                          className="text-primary hover:text-primary/80 p-0 h-auto text-sm font-medium"
+                        >
+                          {t("news.readMore")}
+                          <ArrowRight className="ml-1 h-3.5 w-3.5" />
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </FadeInSection>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -1007,58 +959,58 @@ export default function HomePage() {
             {/* Left: Contact info */}
             <FadeInSection className="lg:col-span-2">
               <div className="space-y-6">
-                <div className="bg-primary rounded-2xl p-6 text-white">
+                <div className="bg-primary rounded-2xl p-6 text-primary-foreground">
                   <h3 className="text-lg font-semibold mb-6 font-[family-name:var(--font-playfair)]">
                     {t("contact.info")}
                   </h3>
                   <div className="space-y-5">
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
                         <MapPin className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium text-sm">
                           {t("contact.address")}
                         </p>
-                        <p className="text-white/80 text-sm">Lomé, Togo</p>
-                        <p className="text-white/80 text-sm">Route de Ségbé</p>
+                        <p className="text-primary-foreground/80 text-sm">Lomé, Togo</p>
+                        <p className="text-primary-foreground/80 text-sm">Route de Ségbé</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
                         <Phone className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium text-sm">
                           {t("contact.phone")}
                         </p>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-primary-foreground/80 text-sm">
                           +228 91 52 26 79
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
                         <Mail className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium text-sm">
                           {t("contact.email")}
                         </p>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-primary-foreground/80 text-sm">
                           infokaramonconseilsarlu@gmail.com
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center shrink-0">
                         <Globe className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="font-medium text-sm">
                           {t("contact.area")}
                         </p>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-primary-foreground/80 text-sm">
                           {t("contact.areaValue")}
                         </p>
                       </div>
@@ -1336,92 +1288,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ═══════════ FOOTER ═══════════ */}
-      <footer className="bg-primary text-white mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-            <div>
-              <div className="flex items-center mb-4">
-                <Image
-                  src="/images/logo.png"
-                  alt="KARAMON CONSEIL"
-                  width={296}
-                  height={72}
-                  className="h-14 w-auto"
-                />
-              </div>
-              <p className="text-white/70 text-sm leading-relaxed text-justify">
-                {t("footer.description")}
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-sm mb-4 tracking-wide uppercase">
-                {t("footer.quickLinks")}
-              </h3>
-              <ul className="space-y-2.5">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <button
-                      onClick={() => scrollTo(link.href)}
-                      className="text-white/70 hover:text-white text-sm transition-colors flex items-center gap-2"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-sm mb-4 tracking-wide uppercase">
-                {t("nav.contact")}
-              </h3>
-              <div className="space-y-3 text-white/70 text-sm">
-                <div className="flex items-start gap-2">
-                  <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                  <span>Lomé, Togo — Route de Ségbé</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 shrink-0" />
-                  <span>+228 91 52 26 79</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 shrink-0" />
-                  <span>infokaramonconseilsarlu@gmail.com</span>
-                </div>
-              </div>
-              <div className="flex gap-2 mt-5">
-                {[
-                  { icon: Facebook, label: "Facebook" },
-                  { icon: Twitter, label: "Twitter" },
-                  { icon: Linkedin, label: "LinkedIn" },
-                ].map((social) => (
-                  <Button
-                    key={social.label}
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-white/70 hover:text-white hover:bg-white/10"
-                    aria-label={social.label}
-                  >
-                    <social.icon className="h-4 w-4" />
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <Separator className="bg-white/20 my-8" />
-
-          <div className="text-center text-white/50 text-xs">
-            <p>
-              Copyright &copy; 2026 KARAMON CONSEIL SARL. {t("footer.rights")}
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 }

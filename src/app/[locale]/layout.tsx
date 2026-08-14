@@ -6,6 +6,10 @@ import { Geist } from 'next/font/google';
 import { Geist_Mono } from 'next/font/google';
 import { Playfair_Display } from 'next/font/google';
 import { organizationJsonLd } from '@/lib/structured-data';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Navbar } from '@/components/site/navbar';
+import { Footer } from '@/components/site/footer';
+import { BackToTop } from '@/components/site/back-to-top';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,9 +55,21 @@ export default async function LocaleLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
       >
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            <div className="min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1 flex flex-col">{children}</main>
+              <Footer />
+            </div>
+            <BackToTop />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -5,7 +5,9 @@
     "projects": "Projects",
     "news": "News",
     "contact": "Contact",
-    "close": "Close"
+    "close": "Close",
+    "themeToggle": "Toggle light/dark theme",
+    "backToTop": "Back to top"
   },
   "hero": {
     "badge": "Environmental and Social Expertise Firm",
@@ -24,7 +26,8 @@
     "statYears": "Years of Experience",
     "statProjects": "Projects Completed",
     "statExperts": "Experts",
-    "statCountries": "Countries of Intervention"
+    "statCountries": "Countries of Intervention",
+    "trustedBy": "Trusted By"
   },
   "services": {
     "badge": "Our Services",

@@ -5,7 +5,9 @@
     "projects": "Projets",
     "news": "Actualités",
     "contact": "Contact",
-    "close": "Fermer"
+    "close": "Fermer",
+    "themeToggle": "Basculer le thème clair/sombre",
+    "backToTop": "Remonter en haut de page"
   },
   "hero": {
     "badge": "Cabinet d'Expertise Environnementale et Sociale",
@@ -24,7 +26,8 @@
     "statYears": "Années d'expérience",
     "statProjects": "Projets réalisés",
     "statExperts": "Experts",
-    "statCountries": "Pays d'intervention"
+    "statCountries": "Pays d'intervention",
+    "trustedBy": "Ils nous font confiance"
   },
   "services": {
     "badge": "Nos Services",
