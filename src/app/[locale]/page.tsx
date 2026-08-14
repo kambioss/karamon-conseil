@@ -102,6 +102,14 @@ const SERVICES_KEYS = [
   "formation",
 ] as const;
 
+/* ─── Partner / funder logos ─── */
+const PARTNERS = [
+  { name: "World Bank", logo: "/images/partners/world-bank.svg" },
+  { name: "African Development Bank", logo: "/images/partners/afdb.png" },
+  { name: "UEMOA", logo: "/images/partners/uemoa.svg" },
+  { name: "BIDC / EBID", logo: "/images/partners/bidc.png" },
+];
+
 /* ─── Animation helpers ─── */
 function FadeInSection({
   children,
@@ -483,31 +491,25 @@ export default function HomePage() {
 
           {/* Trusted by */}
           <FadeInSection delay={0.4}>
-            <div className="mt-14 md:mt-16 flex flex-col items-center gap-4">
+            <div className="mt-14 md:mt-16 flex flex-col items-center gap-6">
               <p className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 {t("about.trustedBy")}
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                {(locale === "fr"
-                  ? [
-                      "Banque mondiale",
-                      "Banque Africaine de Développement",
-                      "UEMOA",
-                      "BIDC",
-                    ]
-                  : [
-                      "World Bank",
-                      "African Development Bank",
-                      "UEMOA",
-                      "EBID",
-                    ]
-                ).map((partner) => (
-                  <span
-                    key={partner}
-                    className="px-4 py-1.5 rounded-full border border-border bg-card/80 text-xs sm:text-sm text-foreground/80 font-medium"
+              <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+                {PARTNERS.map((partner) => (
+                  <div
+                    key={partner.name}
+                    title={partner.name}
+                    className="relative h-10 sm:h-12 w-28 sm:w-32 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                   >
-                    {partner}
-                  </span>
+                    <Image
+                      src={partner.logo}
+                      alt={partner.name}
+                      fill
+                      sizes="140px"
+                      className="object-contain"
+                    />
+                  </div>
                 ))}
               </div>
             </div>
