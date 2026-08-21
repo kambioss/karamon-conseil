@@ -101,7 +101,7 @@ export function Navbar() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
           ? "bg-primary/95 backdrop-blur-md shadow-lg"
-          : "bg-transparent"
+          : "bg-background/80 backdrop-blur-md border-b border-border/60"
       }`}
     >
       {/* Scroll progress bar */}
@@ -132,9 +132,13 @@ export function Navbar() {
                 key={link.href}
                 onClick={() => scrollTo(link.href)}
                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                  isActive
-                    ? "text-white bg-white/15"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
+                  scrolled
+                    ? isActive
+                      ? "text-white bg-white/15"
+                      : "text-white/90 hover:text-white hover:bg-white/10"
+                    : isActive
+                      ? "text-primary bg-primary/10"
+                      : "text-foreground/80 hover:text-foreground hover:bg-foreground/5"
                 }`}
               >
                 {link.label}
@@ -148,13 +152,19 @@ export function Navbar() {
             );
           })}
           {/* Language switcher */}
-          <div className="flex items-center gap-1 ml-3 border-l border-white/20 pl-3">
+          <div
+            className={`flex items-center gap-1 ml-3 border-l pl-3 ${scrolled ? "border-white/20" : "border-border"}`}
+          >
             <button
               onClick={() => switchLocale("fr")}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                locale === "fr"
-                  ? "bg-white/20 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/10"
+                scrolled
+                  ? locale === "fr"
+                    ? "bg-white/20 text-white"
+                    : "text-white/60 hover:text-white hover:bg-white/10"
+                  : locale === "fr"
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
               }`}
             >
               FR
@@ -162,9 +172,13 @@ export function Navbar() {
             <button
               onClick={() => switchLocale("en")}
               className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
-                locale === "en"
-                  ? "bg-white/20 text-white"
-                  : "text-white/60 hover:text-white hover:bg-white/10"
+                scrolled
+                  ? locale === "en"
+                    ? "bg-white/20 text-white"
+                    : "text-white/60 hover:text-white hover:bg-white/10"
+                  : locale === "en"
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted-foreground hover:text-foreground hover:bg-foreground/5"
               }`}
             >
               EN
@@ -172,19 +186,30 @@ export function Navbar() {
           </div>
           <ThemeToggle
             label={t("nav.themeToggle")}
-            className="ml-2 text-white/80 hover:text-white hover:bg-white/10"
+            className={`ml-2 ${
+              scrolled
+                ? "text-white/80 hover:text-white hover:bg-white/10"
+                : "text-foreground/80 hover:text-foreground hover:bg-foreground/5"
+            }`}
           />
         </div>
 
         {/* Mobile menu */}
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle label={t("nav.themeToggle")} className="text-white" />
+          <ThemeToggle
+            label={t("nav.themeToggle")}
+            className={scrolled ? "text-white" : "text-foreground"}
+          />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-white hover:bg-white/10"
+                className={
+                  scrolled
+                    ? "text-white hover:bg-white/10"
+                    : "text-foreground hover:bg-foreground/5"
+                }
               >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Menu</span>

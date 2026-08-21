@@ -142,28 +142,28 @@ function AnimatedText({
           delay: baseDelay + i * stagger,
           ease: "easeOut" as const,
         };
+        const wordClass =
+          i < words.length - 1 ? "inline-block mr-[0.28em]" : "inline-block";
         return triggerOnMount ? (
           <motion.span
             key={i}
-            className="inline-block"
+            className={wordClass}
             initial={{ x: -28, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={transition}
           >
             {word}
-            {i < words.length - 1 ? " " : ""}
           </motion.span>
         ) : (
           <motion.span
             key={i}
-            className="inline-block"
+            className={wordClass}
             initial={{ x: -28, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={transition}
           >
             {word}
-            {i < words.length - 1 ? " " : ""}
           </motion.span>
         );
       })}
@@ -600,8 +600,8 @@ export default function HomePage() {
               <div className="relative">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border group">
                   <Image
-                    src="/images/services.png"
-                    alt="KARAMON CONSEIL team"
+                    src="/images/projects/p17-audit-pta-2425.jpg"
+                    alt="Équipe KARAMON CONSEIL en réunion de travail"
                     width={700}
                     height={400}
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
@@ -680,8 +680,10 @@ export default function HomePage() {
       {/* ═══════════ SERVICES ═══════════ */}
       <section
         id="services"
-        className="py-20 md:py-28 bg-muted/40 geo-accent-dots relative"
+        className="py-20 md:py-28 bg-muted/40 geo-accent-dots relative overflow-hidden"
       >
+        <div className="absolute top-10 left-[15%] w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-[10%] w-64 h-64 rounded-full bg-terracotta/10 blur-3xl pointer-events-none" />
         <svg
           className="absolute top-0 left-0 w-24 h-24 opacity-[0.06]"
           viewBox="0 0 100 100"
@@ -721,10 +723,26 @@ export default function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, i) => (
-              <FadeInSection key={service.title} delay={i * 0.1}>
-                <Card className="h-full border-l-4 border-l-terracotta hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/95 backdrop-blur-sm group">
+              <motion.div
+                key={service.title}
+                initial={{
+                  opacity: 0,
+                  y: 32,
+                  scale: 0.92,
+                  rotate: i % 2 === 0 ? -2.5 : 2.5,
+                }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{
+                  duration: 0.6,
+                  delay: i * 0.09,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                whileHover={{ y: -8, transition: { duration: 0.25 } }}
+              >
+                <Card className="h-full border-l-4 border-l-terracotta hover:shadow-xl hover:shadow-primary/5 transition-shadow duration-300 bg-card/95 backdrop-blur-sm group">
                   <CardHeader className="pb-3">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 transition-all duration-300 group-hover:bg-primary/20 group-hover:rotate-6 group-hover:scale-110">
                       <service.icon className="h-6 w-6 text-primary" />
                     </div>
                     <CardTitle className="text-base font-semibold text-foreground leading-snug">
@@ -737,7 +755,7 @@ export default function HomePage() {
                     </p>
                   </CardContent>
                 </Card>
-              </FadeInSection>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -795,20 +813,30 @@ export default function HomePage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {projects.slice(0, 6).map((project) => (
+              {projects.slice(0, 6).map((project, idx) => (
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-60px" }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{
+                    duration: 0.5,
+                    delay: (idx % 3) * 0.1,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{
+                    y: -8,
+                    rotate: idx % 2 === 0 ? -0.7 : 0.7,
+                    transition: { duration: 0.25 },
+                  }}
                 >
                   <Link
                     href={`/${locale}/projets/${project.slug}`}
                     className="block h-full"
                   >
-                    <Card className="h-full overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card group">
+                    <Card className="h-full overflow-hidden hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 bg-card group">
                       <div className="relative h-48 overflow-hidden">
                         {project.image && (
                           <Image
@@ -916,8 +944,10 @@ export default function HomePage() {
       {/* ═══════════ ACTUALITÉS ═══════════ */}
       <section
         id="actualites"
-        className="py-20 md:py-28 bg-muted/40 geo-accent-lines relative"
+        className="py-20 md:py-28 bg-muted/40 geo-accent-lines relative overflow-hidden"
       >
+        <div className="absolute top-1/3 -right-16 w-72 h-72 rounded-full bg-institutional/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-[8%] w-56 h-56 rounded-full bg-terracotta/10 blur-3xl pointer-events-none" />
         <div
           className="absolute top-0 left-0 right-0 h-3 opacity-[0.08]"
           style={{
