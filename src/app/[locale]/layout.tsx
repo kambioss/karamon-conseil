@@ -2,18 +2,19 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { Geist } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import { Geist_Mono } from 'next/font/google';
-import { Playfair_Display } from 'next/font/google';
+import { Fraunces } from 'next/font/google';
 import { organizationJsonLd } from '@/lib/structured-data';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Navbar } from '@/components/site/navbar';
 import { Footer } from '@/components/site/footer';
 import { BackToTop } from '@/components/site/back-to-top';
 
-const geistSans = Geist({
+const geistSans = Plus_Jakarta_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -21,9 +22,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const playfairDisplay = Playfair_Display({
+const playfairDisplay = Fraunces({
   variable: "--font-playfair",
   subsets: ["latin"],
+  axes: ["opsz", "SOFT", "WONK"],
   display: "swap",
 });
 

@@ -35,7 +35,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -90,15 +90,6 @@ const SERVICES_ICONS = [
   ClipboardCheck,
   Leaf,
   GraduationCap,
-];
-/* Real field photos illustrating each service, pulled from our own projects. */
-const SERVICES_IMAGES = [
-  "/images/projects/p02-eies-aep-togo.jpg",
-  "/images/projects/p06-corridor-ci.jpg",
-  "/images/projects/p03-par-aep-togo.jpg",
-  "/images/projects/p15-audit-papsgouv.jpg",
-  "/images/projects/p08-centres-formation.jpg",
-  "/images/projects/p01-oncq-guinee.jpg",
 ];
 const SERVICES_KEYS = [
   "eies",
@@ -358,7 +349,6 @@ export default function HomePage() {
   // Services built from translations
   const services = SERVICES_KEYS.map((key, i) => ({
     icon: SERVICES_ICONS[i],
-    image: SERVICES_IMAGES[i],
     title: t(`services.${key}.title`),
     description: t(`services.${key}.desc`),
   }));
@@ -749,30 +739,17 @@ export default function HomePage() {
                 }}
                 whileHover={{ y: -8, transition: { duration: 0.25 } }}
               >
-                <Card className="h-full overflow-hidden pt-0 gap-0 hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 bg-card/95 backdrop-blur-sm group">
-                  <div className="relative h-36 overflow-hidden">
-                    <Image
-                      src={service.image}
-                      alt=""
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent" />
-                    <div className="absolute -bottom-5 left-4 w-12 h-12 rounded-xl bg-card shadow-lg ring-4 ring-card flex items-center justify-center transition-all duration-300 group-hover:rotate-6 group-hover:scale-110">
-                      <service.icon className="h-6 w-6 text-terracotta" />
-                    </div>
-                  </div>
-                  <CardHeader className="pt-7 pb-3">
-                    <CardTitle className="text-base font-semibold text-foreground leading-snug">
-                      {service.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground text-sm leading-relaxed text-justify">
-                      {service.description}
-                    </p>
-                  </CardContent>
+                <Card className="relative h-full border-0 rounded-2xl gap-0 p-8 pb-14 overflow-hidden bg-primary text-primary-foreground shadow-lg shadow-primary/10 transition-colors duration-300 hover:bg-primary/90 group">
+                  <span className="text-terracotta text-xs font-bold tracking-[0.2em]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <CardTitle className="text-xl font-bold text-primary-foreground mt-6 mb-3 leading-snug font-[family-name:var(--font-playfair)]">
+                    {service.title}
+                  </CardTitle>
+                  <p className="text-primary-foreground/70 text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                  <ArrowUpRight className="absolute bottom-6 right-6 h-5 w-5 text-primary-foreground/40 transition-all duration-300 group-hover:text-terracotta group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </Card>
               </motion.div>
             ))}
