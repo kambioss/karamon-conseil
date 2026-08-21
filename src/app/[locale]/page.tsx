@@ -108,13 +108,8 @@ const PARTNERS = [
   { name: "BIDC / EBID", logo: "/images/partners/bidc.png" },
 ];
 
-/* ─── Hero slideshow images ─── */
-const HERO_IMAGES = [
-  "/images/hero-bg.png",
-  "/images/projects/p02-eies-aep-togo.jpg",
-  "/images/projects/p06-corridor-ci.jpg",
-  "/images/projects/p08-centres-formation.jpg",
-];
+/* ─── Hero image ─── */
+const HERO_IMAGE = "/images/hero-bg.png";
 
 /* ─── Animation helpers ─── */
 
@@ -179,16 +174,6 @@ function HeroImagePanel({
   projectsCount: number;
   projectsLabel: string;
 }) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(
-      () => setIndex((i) => (i + 1) % HERO_IMAGES.length),
-      5000,
-    );
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <motion.div
       initial={{ opacity: 0, x: 40 }}
@@ -201,45 +186,17 @@ function HeroImagePanel({
       <div className="absolute -bottom-16 -left-12 w-64 h-64 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
 
       <div className="relative aspect-[4/5] sm:aspect-[5/6] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-border/60">
-        {HERO_IMAGES.map((src, i) => (
-          <div
-            key={src}
-            className="absolute inset-0 transition-opacity duration-[1800ms] ease-in-out"
-            style={{ opacity: i === index ? 1 : 0 }}
-          >
-            <Image
-              src={src}
-              alt="KARAMON CONSEIL — projets environnementaux en Afrique de l'Ouest"
-              fill
-              priority={i === 0}
-              sizes="(max-width: 1024px) 90vw, 45vw"
-              className={
-                i === index
-                  ? "object-cover animate-ken-burns"
-                  : "object-cover"
-              }
-            />
-          </div>
-        ))}
+        <Image
+          src={HERO_IMAGE}
+          alt="KARAMON CONSEIL — projets environnementaux en Afrique de l'Ouest"
+          fill
+          priority
+          sizes="(max-width: 1024px) 90vw, 45vw"
+          className="object-cover animate-ken-burns"
+        />
         {/* Brand-colored gradient wash for cohesion */}
         <div className="absolute inset-0 bg-gradient-to-tr from-primary/25 via-transparent to-terracotta/15 mix-blend-multiply dark:mix-blend-color-dodge dark:opacity-40" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/50 to-transparent" />
-
-        {/* Slide indicators */}
-        <div className="absolute top-5 right-5 z-10 flex gap-1.5">
-          {HERO_IMAGES.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(i)}
-              aria-label={`Slide ${i + 1}`}
-              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-                i === index
-                  ? "w-6 bg-white"
-                  : "w-1.5 bg-white/50 hover:bg-white/80"
-              }`}
-            />
-          ))}
-        </div>
       </div>
 
       {/* Floating glass stat card */}
@@ -739,17 +696,17 @@ export default function HomePage() {
                 }}
                 whileHover={{ y: -8, transition: { duration: 0.25 } }}
               >
-                <Card className="relative h-full border-0 rounded-2xl gap-0 p-8 pb-14 overflow-hidden bg-primary text-primary-foreground shadow-lg shadow-primary/10 transition-colors duration-300 hover:bg-primary/90 group">
+                <Card className="relative h-full border-0 rounded-2xl gap-0 p-8 pb-14 overflow-hidden bg-institutional text-institutional-foreground shadow-lg shadow-institutional/10 transition-colors duration-300 hover:bg-institutional/90 group">
                   <span className="text-terracotta text-xs font-bold tracking-[0.2em]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <CardTitle className="text-xl font-bold text-primary-foreground mt-6 mb-3 leading-snug font-[family-name:var(--font-playfair)]">
+                  <CardTitle className="text-xl font-bold text-institutional-foreground mt-6 mb-3 leading-snug font-[family-name:var(--font-playfair)]">
                     {service.title}
                   </CardTitle>
-                  <p className="text-primary-foreground/70 text-sm leading-relaxed">
+                  <p className="text-institutional-foreground/70 text-sm leading-relaxed">
                     {service.description}
                   </p>
-                  <ArrowUpRight className="absolute bottom-6 right-6 h-5 w-5 text-primary-foreground/40 transition-all duration-300 group-hover:text-terracotta group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <ArrowUpRight className="absolute bottom-6 right-6 h-5 w-5 text-institutional-foreground/40 transition-all duration-300 group-hover:text-terracotta group-hover:translate-x-1 group-hover:-translate-y-1" />
                 </Card>
               </motion.div>
             ))}
