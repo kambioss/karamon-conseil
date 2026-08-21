@@ -110,7 +110,129 @@ const PARTNERS = [
   { name: "BIDC / EBID", logo: "/images/partners/bidc.png" },
 ];
 
+/* ─── Hero slideshow images ─── */
+const HERO_IMAGES = [
+  "/images/hero-bg.png",
+  "/images/projects/p02-eies-aep-togo.jpg",
+  "/images/projects/p06-corridor-ci.jpg",
+  "/images/projects/p08-centres-formation.jpg",
+];
+
 /* ─── Animation helpers ─── */
+
+/** Word-by-word "mask reveal" text animation. */
+function AnimatedText({
+  text,
+  className = "",
+  stagger = 0.06,
+  baseDelay = 0,
+  triggerOnMount = false,
+}: {
+  text: string;
+  className?: string;
+  stagger?: number;
+  baseDelay?: number;
+  triggerOnMount?: boolean;
+}) {
+  const words = text.split(" ");
+  return (
+    <span className={className}>
+      {words.map((word, i) => {
+        const transition = {
+          duration: 0.7,
+          delay: baseDelay + i * stagger,
+          ease: "easeOut" as const,
+        };
+        return (
+          <span
+            key={i}
+            className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]"
+          >
+            {triggerOnMount ? (
+              <motion.span
+                className="inline-block"
+                initial={{ y: "115%", opacity: 0 }}
+                animate={{ y: "0%", opacity: 1 }}
+                transition={transition}
+              >
+                {word}
+                {i < words.length - 1 ? " " : ""}
+              </motion.span>
+            ) : (
+              <motion.span
+                className="inline-block"
+                initial={{ y: "115%", opacity: 0 }}
+                whileInView={{ y: "0%", opacity: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={transition}
+              >
+                {word}
+                {i < words.length - 1 ? " " : ""}
+              </motion.span>
+            )}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+/** Crossfading, Ken-Burns hero background slideshow. */
+function HeroSlideshow() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(
+      () => setIndex((i) => (i + 1) % HERO_IMAGES.length),
+      6000,
+    );
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="absolute inset-0">
+      {HERO_IMAGES.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 transition-opacity duration-[1800ms] ease-in-out"
+          style={{ opacity: i === index ? 1 : 0 }}
+        >
+          <Image
+            src={src}
+            alt="KARAMON CONSEIL — projets environnementaux en Afrique de l'Ouest"
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className={
+              i === index
+                ? "object-cover animate-ken-burns"
+                : "object-cover"
+            }
+          />
+        </div>
+      ))}
+      <div className="hero-gradient absolute inset-0" />
+      <div className="hero-gradient-bottom absolute inset-0" />
+
+      {/* Slide indicators */}
+      <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        {HERO_IMAGES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            aria-label={`Slide ${i + 1}`}
+            className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+              i === index
+                ? "w-8 bg-terracotta"
+                : "w-1.5 bg-white/40 hover:bg-white/60"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FadeInSection({
   children,
   className = "",
@@ -304,82 +426,88 @@ export default function HomePage() {
         id="accueil"
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
       >
-        {/* Background image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/hero-bg.png"
-            alt="African landscape"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover animate-ken-burns"
-          />
-          <div className="hero-gradient absolute inset-0" />
-          <div className="hero-gradient-bottom absolute inset-0" />
-        </div>
+        {/* Background slideshow */}
+        <HeroSlideshow />
 
         {/* Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <Badge className="bg-terracotta text-terracotta-foreground border-terracotta mb-6 px-4 py-1.5 text-sm">
               {t("hero.badge")}
             </Badge>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-playfair)] mb-6 drop-shadow-md">
-              {t("hero.title1")}
-              <br />
-              <span className="text-terracotta">
-                {t("hero.titleHighlight")}
-              </span>
-            </h1>
-            <p className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-sm">
-              {t("hero.subtitle")}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  size="lg"
-                  onClick={() => scrollTo("#services")}
-                  className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg w-full sm:w-auto"
-                >
-                  {t("hero.cta1")}
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => scrollTo("#contact")}
-                  className="border-white/40 text-white hover:bg-white/10 text-base px-8 py-6 rounded-xl bg-white/5 backdrop-blur-sm w-full sm:w-auto"
-                >
-                  {t("hero.cta2")}
-                </Button>
-              </motion.div>
-            </div>
-
-            {/* Quick trust stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-white/85"
-            >
-              {STATS.slice(0, 3).map((stat) => (
-                <div key={stat.label} className="flex items-baseline gap-1.5">
-                  <span className="text-xl md:text-2xl font-bold text-terracotta font-[family-name:var(--font-playfair)]">
-                    {stat.value}
-                    {stat.suffix}
-                  </span>
-                  <span className="text-xs md:text-sm text-white/70">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
+          </motion.div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-playfair)] mb-6 drop-shadow-md">
+            <AnimatedText
+              text={t("hero.title1")}
+              triggerOnMount
+              baseDelay={0.35}
+              className="block"
+            />
+            <AnimatedText
+              text={t("hero.titleHighlight")}
+              triggerOnMount
+              baseDelay={0.62}
+              className="block text-terracotta"
+            />
+          </h1>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.05, ease: "easeOut" }}
+            className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-sm"
+          >
+            {t("hero.subtitle")}
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          >
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                size="lg"
+                onClick={() => scrollTo("#services")}
+                className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg w-full sm:w-auto"
+              >
+                {t("hero.cta1")}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </motion.div>
+            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => scrollTo("#contact")}
+                className="border-white/40 text-white hover:bg-white/10 text-base px-8 py-6 rounded-xl bg-white/5 backdrop-blur-sm w-full sm:w-auto"
+              >
+                {t("hero.cta2")}
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          {/* Quick trust stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-white/85"
+          >
+            {STATS.slice(0, 3).map((stat) => (
+              <div key={stat.label} className="flex items-baseline gap-1.5">
+                <span className="text-xl md:text-2xl font-bold text-terracotta font-[family-name:var(--font-playfair)]">
+                  {stat.value}
+                  {stat.suffix}
+                </span>
+                <span className="text-xs md:text-sm text-white/70">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
           </motion.div>
         </div>
 
@@ -419,7 +547,7 @@ export default function HomePage() {
                 {t("about.badge")}
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-6">
-                {t("about.title")}
+                <AnimatedText text={t("about.title")} />
               </h2>
               <p className="text-muted-foreground leading-relaxed mb-4 text-justify">
                 {t("about.p1")}
@@ -552,7 +680,7 @@ export default function HomePage() {
               {t("services.badge")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t("services.title")}
+              <AnimatedText text={t("services.title")} />
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {t("services.subtitle")}
@@ -626,7 +754,7 @@ export default function HomePage() {
               {t("projects.badge")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t("projects.title")}
+              <AnimatedText text={t("projects.title")} />
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {t("projects.subtitle")}
@@ -770,7 +898,7 @@ export default function HomePage() {
               {t("news.badge")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t("news.title")}
+              <AnimatedText text={t("news.title")} />
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {t("news.subtitle")}
@@ -950,7 +1078,7 @@ export default function HomePage() {
               {t("contact.badge")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t("contact.title")}
+              <AnimatedText text={t("contact.title")} />
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {t("contact.subtitle")}
