@@ -26,7 +26,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   CheckCircle2,
-  Clock,
   Facebook,
   Twitter,
   Linkedin,
@@ -91,6 +90,15 @@ const SERVICES_ICONS = [
   ClipboardCheck,
   Leaf,
   GraduationCap,
+];
+/* Real field photos illustrating each service, pulled from our own projects. */
+const SERVICES_IMAGES = [
+  "/images/projects/p02-eies-aep-togo.jpg",
+  "/images/projects/p06-corridor-ci.jpg",
+  "/images/projects/p03-par-aep-togo.jpg",
+  "/images/projects/p15-audit-papsgouv.jpg",
+  "/images/projects/p08-centres-formation.jpg",
+  "/images/projects/p01-oncq-guinee.jpg",
 ];
 const SERVICES_KEYS = [
   "eies",
@@ -350,6 +358,7 @@ export default function HomePage() {
   // Services built from translations
   const services = SERVICES_KEYS.map((key, i) => ({
     icon: SERVICES_ICONS[i],
+    image: SERVICES_IMAGES[i],
     title: t(`services.${key}.title`),
     description: t(`services.${key}.desc`),
   }));
@@ -740,11 +749,21 @@ export default function HomePage() {
                 }}
                 whileHover={{ y: -8, transition: { duration: 0.25 } }}
               >
-                <Card className="h-full border-l-4 border-l-terracotta hover:shadow-xl hover:shadow-primary/5 transition-shadow duration-300 bg-card/95 backdrop-blur-sm group">
-                  <CardHeader className="pb-3">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 transition-all duration-300 group-hover:bg-primary/20 group-hover:rotate-6 group-hover:scale-110">
-                      <service.icon className="h-6 w-6 text-primary" />
+                <Card className="h-full overflow-hidden pt-0 gap-0 hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 bg-card/95 backdrop-blur-sm group">
+                  <div className="relative h-36 overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-primary/10 to-transparent" />
+                    <div className="absolute -bottom-5 left-4 w-12 h-12 rounded-xl bg-card shadow-lg ring-4 ring-card flex items-center justify-center transition-all duration-300 group-hover:rotate-6 group-hover:scale-110">
+                      <service.icon className="h-6 w-6 text-terracotta" />
                     </div>
+                  </div>
+                  <CardHeader className="pt-7 pb-3">
                     <CardTitle className="text-base font-semibold text-foreground leading-snug">
                       {service.title}
                     </CardTitle>
@@ -844,10 +863,14 @@ export default function HomePage() {
                             alt={project.title}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         )}
                         <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/45 to-transparent pointer-events-none" />
+                        {/* Diagonal light sweep on hover */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                          <div className="absolute -inset-y-full -left-1/2 w-1/3 -skew-x-12 bg-white/25 -translate-x-[150%] group-hover:translate-x-[420%] transition-transform duration-[900ms] ease-out" />
+                        </div>
                         <div className="absolute inset-0 flex items-center justify-center bg-primary/0 group-hover:bg-primary/20 transition-colors duration-300">
                           <div className="w-11 h-11 rounded-full bg-white/95 flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 shadow-lg">
                             <ArrowUpRight className="h-5 w-5 text-primary" />
@@ -868,7 +891,10 @@ export default function HomePage() {
                           >
                             {project.status === "en-cours" ? (
                               <>
-                                <Clock className="mr-1 h-3 w-3" />{" "}
+                                <span className="relative mr-1.5 flex h-2 w-2">
+                                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70" />
+                                  <span className="relative inline-flex h-2 w-2 rounded-full bg-white" />
+                                </span>
                                 {t("projects.ongoingBadge")}
                               </>
                             ) : (
