@@ -21,7 +21,6 @@ import {
   MapPin,
   Phone,
   Mail,
-  ChevronDown,
   Calendar,
   Building2,
   ArrowRight,
@@ -120,11 +119,11 @@ const HERO_IMAGES = [
 
 /* ─── Animation helpers ─── */
 
-/** Word-by-word "mask reveal" text animation. */
+/** Word-by-word reveal that sweeps in from the left. */
 function AnimatedText({
   text,
   className = "",
-  stagger = 0.06,
+  stagger = 0.07,
   baseDelay = 0,
   triggerOnMount = false,
 }: {
@@ -139,97 +138,133 @@ function AnimatedText({
     <span className={className}>
       {words.map((word, i) => {
         const transition = {
-          duration: 0.7,
+          duration: 0.6,
           delay: baseDelay + i * stagger,
           ease: "easeOut" as const,
         };
-        return (
-          <span
+        return triggerOnMount ? (
+          <motion.span
             key={i}
-            className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]"
+            className="inline-block"
+            initial={{ x: -28, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={transition}
           >
-            {triggerOnMount ? (
-              <motion.span
-                className="inline-block"
-                initial={{ y: "115%", opacity: 0 }}
-                animate={{ y: "0%", opacity: 1 }}
-                transition={transition}
-              >
-                {word}
-                {i < words.length - 1 ? " " : ""}
-              </motion.span>
-            ) : (
-              <motion.span
-                className="inline-block"
-                initial={{ y: "115%", opacity: 0 }}
-                whileInView={{ y: "0%", opacity: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={transition}
-              >
-                {word}
-                {i < words.length - 1 ? " " : ""}
-              </motion.span>
-            )}
-          </span>
+            {word}
+            {i < words.length - 1 ? " " : ""}
+          </motion.span>
+        ) : (
+          <motion.span
+            key={i}
+            className="inline-block"
+            initial={{ x: -28, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={transition}
+          >
+            {word}
+            {i < words.length - 1 ? " " : ""}
+          </motion.span>
         );
       })}
     </span>
   );
 }
 
-/** Crossfading, Ken-Burns hero background slideshow. */
-function HeroSlideshow() {
+/** Right-hand hero visual: crossfading photo panel blended into the
+ * page with soft gradient blobs, plus a floating glass stat card. */
+function HeroImagePanel({
+  projectsCount,
+  projectsLabel,
+}: {
+  projectsCount: number;
+  projectsLabel: string;
+}) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(
       () => setIndex((i) => (i + 1) % HERO_IMAGES.length),
-      6000,
+      5000,
     );
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="absolute inset-0">
-      {HERO_IMAGES.map((src, i) => (
-        <div
-          key={src}
-          className="absolute inset-0 transition-opacity duration-[1800ms] ease-in-out"
-          style={{ opacity: i === index ? 1 : 0 }}
-        >
-          <Image
-            src={src}
-            alt="KARAMON CONSEIL — projets environnementaux en Afrique de l'Ouest"
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className={
-              i === index
-                ? "object-cover animate-ken-burns"
-                : "object-cover"
-            }
-          />
-        </div>
-      ))}
-      <div className="hero-gradient absolute inset-0" />
-      <div className="hero-gradient-bottom absolute inset-0" />
+    <motion.div
+      initial={{ opacity: 0, x: 40 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+      className="relative"
+    >
+      {/* Soft gradient blobs blending the panel into the page */}
+      <div className="absolute -top-12 -right-12 w-72 h-72 rounded-full bg-terracotta/30 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-16 -left-12 w-64 h-64 rounded-full bg-primary/25 blur-3xl pointer-events-none" />
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {HERO_IMAGES.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            aria-label={`Slide ${i + 1}`}
-            className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
-              i === index
-                ? "w-8 bg-terracotta"
-                : "w-1.5 bg-white/40 hover:bg-white/60"
-            }`}
-          />
+      <div className="relative aspect-[4/5] sm:aspect-[5/6] rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-border/60">
+        {HERO_IMAGES.map((src, i) => (
+          <div
+            key={src}
+            className="absolute inset-0 transition-opacity duration-[1800ms] ease-in-out"
+            style={{ opacity: i === index ? 1 : 0 }}
+          >
+            <Image
+              src={src}
+              alt="KARAMON CONSEIL — projets environnementaux en Afrique de l'Ouest"
+              fill
+              priority={i === 0}
+              sizes="(max-width: 1024px) 90vw, 45vw"
+              className={
+                i === index
+                  ? "object-cover animate-ken-burns"
+                  : "object-cover"
+              }
+            />
+          </div>
         ))}
+        {/* Brand-colored gradient wash for cohesion */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/25 via-transparent to-terracotta/15 mix-blend-multiply dark:mix-blend-color-dodge dark:opacity-40" />
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/50 to-transparent" />
+
+        {/* Slide indicators */}
+        <div className="absolute top-5 right-5 z-10 flex gap-1.5">
+          {HERO_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              aria-label={`Slide ${i + 1}`}
+              className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                i === index
+                  ? "w-6 bg-white"
+                  : "w-1.5 bg-white/50 hover:bg-white/80"
+              }`}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/* Floating glass stat card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 1.1, ease: "easeOut" }}
+        className="absolute -bottom-8 -left-6 sm:-left-10 bg-card/90 backdrop-blur-md border border-border rounded-2xl shadow-xl px-6 py-5 flex items-center gap-4"
+      >
+        <div className="w-12 h-12 rounded-xl bg-terracotta/15 flex items-center justify-center shrink-0">
+          <Leaf className="h-6 w-6 text-terracotta" />
+        </div>
+        <div>
+          <AnimatedCounter
+            target={projectsCount}
+            suffix="+"
+            className="text-2xl font-bold text-primary leading-none font-[family-name:var(--font-playfair)]"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            {projectsLabel}
+          </p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -260,9 +295,11 @@ function FadeInSection({
 function AnimatedCounter({
   target,
   suffix,
+  className = "text-4xl md:text-5xl font-bold text-primary font-[family-name:var(--font-playfair)]",
 }: {
   target: number;
   suffix: string;
+  className?: string;
 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -285,10 +322,7 @@ function AnimatedCounter({
   }, [isInView, target]);
 
   return (
-    <span
-      ref={ref}
-      className="text-4xl md:text-5xl font-bold text-primary font-[family-name:var(--font-playfair)]"
-    >
+    <span ref={ref} className={className}>
       {count}
       {suffix}
     </span>
@@ -424,102 +458,100 @@ export default function HomePage() {
       {/* ═══════════ HERO ═══════════ */}
       <section
         id="accueil"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-40 lg:pb-24 bg-background geo-accent-dots"
       >
-        {/* Background slideshow */}
-        <HeroSlideshow />
+        {/* Ambient gradient backdrop */}
+        <div className="absolute -top-32 -right-20 w-[32rem] h-[32rem] rounded-full bg-gradient-to-br from-terracotta/20 via-primary/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 -left-24 w-96 h-96 rounded-full bg-gradient-to-tr from-institutional/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <Badge className="bg-terracotta text-terracotta-foreground border-terracotta mb-6 px-4 py-1.5 text-sm">
-              {t("hero.badge")}
-            </Badge>
-          </motion.div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-playfair)] mb-6 drop-shadow-md">
-            <AnimatedText
-              text={t("hero.title1")}
-              triggerOnMount
-              baseDelay={0.35}
-              className="block"
-            />
-            <AnimatedText
-              text={t("hero.titleHighlight")}
-              triggerOnMount
-              baseDelay={0.62}
-              className="block text-terracotta"
-            />
-          </h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.05, ease: "easeOut" }}
-            className="text-white/85 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-sm"
-          >
-            {t("hero.subtitle")}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.2, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-          >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button
-                size="lg"
-                onClick={() => scrollTo("#services")}
-                className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg w-full sm:w-auto"
-              >
-                {t("hero.cta1")}
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-14 lg:gap-16 items-center">
+          {/* Left: text content */}
+          <div className="text-left">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Badge className="bg-terracotta text-terracotta-foreground border-terracotta mb-6 px-4 py-1.5 text-sm">
+                {t("hero.badge")}
+              </Badge>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => scrollTo("#contact")}
-                className="border-white/40 text-white hover:bg-white/10 text-base px-8 py-6 rounded-xl bg-white/5 backdrop-blur-sm w-full sm:w-auto"
-              >
-                {t("hero.cta2")}
-              </Button>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] font-bold text-foreground leading-[1.12] font-[family-name:var(--font-playfair)] mb-6">
+              <AnimatedText
+                text={t("hero.title1")}
+                triggerOnMount
+                baseDelay={0.25}
+                className="block"
+              />
+              <AnimatedText
+                text={t("hero.titleHighlight")}
+                triggerOnMount
+                baseDelay={0.55}
+                className="block text-terracotta"
+              />
+            </h1>
+            <motion.p
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 1.0, ease: "easeOut" }}
+              className="text-muted-foreground text-lg md:text-xl max-w-xl mb-10 leading-relaxed"
+            >
+              {t("hero.subtitle")}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 1.15, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row gap-4 mb-12"
+            >
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  size="lg"
+                  onClick={() => scrollTo("#services")}
+                  className="bg-terracotta hover:bg-terracotta/90 text-white text-base px-8 py-6 rounded-xl shadow-lg w-full sm:w-auto"
+                >
+                  {t("hero.cta1")}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  onClick={() => scrollTo("#contact")}
+                  className="border-primary/30 text-foreground hover:bg-primary hover:text-primary-foreground text-base px-8 py-6 rounded-xl w-full sm:w-auto"
+                >
+                  {t("hero.cta2")}
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Quick trust stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.4 }}
-            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-white/85"
-          >
-            {STATS.slice(0, 3).map((stat) => (
-              <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="text-xl md:text-2xl font-bold text-terracotta font-[family-name:var(--font-playfair)]">
-                  {stat.value}
-                  {stat.suffix}
-                </span>
-                <span className="text-xs md:text-sm text-white/70">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+            {/* Quick trust stats */}
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.3, ease: "easeOut" }}
+              className="flex flex-wrap items-center gap-x-10 gap-y-4 pt-8 border-t border-border"
+            >
+              {STATS.slice(0, 3).map((stat) => (
+                <div key={stat.label} className="flex items-baseline gap-1.5">
+                  <span className="text-2xl md:text-3xl font-bold text-primary font-[family-name:var(--font-playfair)]">
+                    {stat.value}
+                    {stat.suffix}
+                  </span>
+                  <span className="text-xs md:text-sm text-muted-foreground">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
-          <button
-            onClick={() => scrollTo("#apropos")}
-            className="text-white/60 hover:text-white/90 transition-colors"
-            aria-label="Scroll down"
-          >
-            <ChevronDown className="h-8 w-8" />
-          </button>
+          {/* Right: image panel */}
+          <HeroImagePanel
+            projectsCount={STATS[1].value}
+            projectsLabel={STATS[1].label}
+          />
         </div>
       </section>
 
