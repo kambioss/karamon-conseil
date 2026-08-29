@@ -665,51 +665,58 @@ export default function HomePage() {
           <polygon points="100,0 0,100 100,100" fill="oklch(0.33 0.08 160)" />
         </svg>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInSection className="text-center mb-14">
+          <FadeInSection className="mb-14 md:mb-16">
             <Badge variant="secondary" className="mb-4">
               {t("services.badge")}
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              <AnimatedText text={t("services.title")} />
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {t("services.subtitle")}
-            </p>
+            <div className="grid gap-5 md:grid-cols-[minmax(0,1.05fr)_minmax(20rem,0.75fr)] md:items-end">
+              <h2 className="max-w-2xl text-3xl md:text-5xl font-bold text-primary font-[family-name:var(--font-playfair)] leading-tight">
+                <AnimatedText text={t("services.title")} />
+              </h2>
+              <p className="max-w-xl text-muted-foreground leading-relaxed md:border-l md:border-primary/20 md:pl-7">
+                {t("services.subtitle")}
+              </p>
+            </div>
           </FadeInSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, i) => (
-              <motion.div
-                key={service.title}
-                initial={{
-                  opacity: 0,
-                  y: 32,
-                  scale: 0.92,
-                  rotate: i % 2 === 0 ? -2.5 : 2.5,
-                }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.6,
-                  delay: i * 0.09,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                whileHover={{ y: -8, transition: { duration: 0.25 } }}
-              >
-                <Card className="relative h-full border-0 rounded-2xl gap-0 p-8 pb-14 overflow-hidden bg-institutional text-institutional-foreground shadow-lg shadow-institutional/10 transition-colors duration-300 hover:bg-institutional/90 group">
-                  <span className="text-terracotta text-xs font-bold tracking-[0.2em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <CardTitle className="text-xl font-bold text-institutional-foreground mt-6 mb-3 leading-snug font-[family-name:var(--font-playfair)]">
-                    {service.title}
-                  </CardTitle>
-                  <p className="text-institutional-foreground/70 text-sm leading-relaxed">
-                    {service.description}
-                  </p>
-                  <ArrowUpRight className="absolute bottom-6 right-6 h-5 w-5 text-institutional-foreground/40 transition-all duration-300 group-hover:text-terracotta group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </Card>
-              </motion.div>
-            ))}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            {services.map((service, i) => {
+              const Icon = service.icon;
+
+              return (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{
+                    duration: 0.55,
+                    delay: i * 0.07,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ y: -6, transition: { duration: 0.22 } }}
+                >
+                  <Card className="group relative h-full min-h-[330px] overflow-hidden rounded-2xl border border-primary/10 bg-card/95 p-7 gap-0 shadow-[0_12px_35px_-24px_rgba(22,49,75,0.45)] transition-all duration-300 hover:border-terracotta/35 hover:shadow-[0_22px_45px_-24px_rgba(22,49,75,0.5)] md:p-8">
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary/70 to-terracotta opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="flex items-start justify-between">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                        <Icon className="h-5 w-5" strokeWidth={1.8} />
+                      </div>
+                      <span className="font-mono text-[11px] font-semibold tracking-[0.18em] text-terracotta/80">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <CardTitle className="mt-8 mb-4 text-xl font-bold leading-snug text-institutional font-[family-name:var(--font-playfair)] md:text-[1.35rem]">
+                      {service.title}
+                    </CardTitle>
+                    <p className="text-sm leading-[1.7] text-muted-foreground">
+                      {service.description}
+                    </p>
+                    <div className="absolute bottom-0 right-0 h-20 w-20 translate-x-10 translate-y-10 rounded-full border border-terracotta/15 transition-transform duration-500 group-hover:translate-x-8 group-hover:translate-y-8" />
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
