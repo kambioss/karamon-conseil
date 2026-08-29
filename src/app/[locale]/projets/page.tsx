@@ -60,7 +60,7 @@ export default function ProjetsPage() {
       <section className="relative h-72 sm:h-80 lg:h-96 flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/pattern-african-2.png"
+            src="/images/pattern-african-2.jpg"
             alt=""
             aria-hidden
             fill

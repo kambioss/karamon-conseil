@@ -24,7 +24,7 @@ export default async function ActualitesPage({
       <section className="relative h-72 sm:h-80 lg:h-96 flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/pattern-african-3.png"
+            src="/images/pattern-african-3.jpg"
             alt=""
             aria-hidden
             fill

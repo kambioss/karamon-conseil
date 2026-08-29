@@ -292,7 +292,7 @@ html {
 
 /* About section - warm savanna overlay */
 .section-bg-about {
-  background-image: url('/images/pattern-african-1.png');
+  background-image: url('/images/pattern-african-1.jpg');
 }
 
 .section-bg-about::after {
@@ -306,7 +306,7 @@ html {
 
 /* Projects section - deep forest overlay */
 .section-bg-projects {
-  background-image: url('/images/pattern-african-2.png');
+  background-image: url('/images/pattern-african-2.jpg');
 }
 
 .section-bg-projects::after {
@@ -320,7 +320,7 @@ html {
 
 /* Contact section - ocean blue overlay */
 .section-bg-contact {
-  background-image: url('/images/pattern-african-3.png');
+  background-image: url('/images/pattern-african-3.jpg');
 }
 
 .section-bg-contact::after {

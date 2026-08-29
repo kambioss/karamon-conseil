@@ -109,7 +109,7 @@ const PARTNERS = [
 ];
 
 /* ─── Hero image ─── */
-const HERO_IMAGE = "/images/hero-bg.png";
+const HERO_IMAGE = "/images/hero-bg.jpg";
 
 /* ─── Animation helpers ─── */
 
