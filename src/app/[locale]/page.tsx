@@ -556,7 +556,7 @@ export default function HomePage() {
               <div className="relative">
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border group">
                   <Image
-                    src="/images/projects/p17-audit-pta-2425.jpg"
+                    src="/images/projects/p17-audit-pta-2425.webp"
                     alt="Équipe KARAMON CONSEIL en réunion de travail"
                     width={700}
                     height={400}

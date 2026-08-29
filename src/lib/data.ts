@@ -520,7 +520,7 @@ export const projects: Project[] = [
     category: "audit",
     startDate: "2024-01-01",
     endDate: null,
-    image: "/images/projects/p17-audit-pta-2425.jpg",
+    image: "/images/projects/p17-audit-pta-2425.webp",
     actions: null,
     results: null,
     createdAt: "2024-01-01T00:00:00.000Z",
