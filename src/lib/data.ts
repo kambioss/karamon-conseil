@@ -1,5 +1,5 @@
 /**
- * Données statiques de l'application — en dur dans le code.
+ * Données statiques de l'application, en dur dans le code.
  *
  * Ce fichier remplace l'usage de Supabase (et de Prisma) comme source de
  * données : tout le contenu (projets, actualités) est désormais déclaré
@@ -501,8 +501,8 @@ export const projects: Project[] = [
   },
   {
     id: "project-17",
-    title: "Audit annuel de performance E&S du Projet de Transformation Agro-alimentaire (PTA-Togo) — 2024-2025",
-    titleEn: "Annual E&S performance audit of the Agro-food Processing Project (PTA-Togo) — 2024-2025",
+    title: "Audit annuel de performance E&S du Projet de Transformation Agro-alimentaire (PTA-Togo) 2024-2025",
+    titleEn: "Annual E&S performance audit of the Agro-food Processing Project (PTA-Togo) 2024-2025",
     slug: "projet-17",
     description:
       "Audit annuel de performance environnementale et sociale du projet de Transformation Agro-alimentaire (PTA-Togo), au titre des exercices 2024 et 2025.",
@@ -528,8 +528,8 @@ export const projects: Project[] = [
   },
   {
     id: "project-18",
-    title: "Audit annuel de performance E&S du Projet de Transformation Agro-alimentaire (PTA-Togo) — 2021-2023",
-    titleEn: "Annual E&S performance audit of the Agro-food Processing Project (PTA-Togo) — 2021-2023",
+    title: "Audit annuel de performance E&S du Projet de Transformation Agro-alimentaire (PTA-Togo) 2021-2023",
+    titleEn: "Annual E&S performance audit of the Agro-food Processing Project (PTA-Togo) 2021-2023",
     slug: "projet-18",
     description:
       "Audit annuel de performance environnementale et sociale du projet de Transformation Agro-alimentaire (PTA-Togo), au titre des exercices 2021, 2022 et 2023.",
@@ -688,13 +688,13 @@ export const contactMessages: ContactMessage[] = []
  * aux champs `<field>` correspondants lorsque la locale est 'en'.
  * Ne modifie rien si la traduction anglaise n'est pas renseignée.
  */
-function localize<T extends Record<string, unknown>>(
+function localize<T extends object>(
   item: T,
   locale: string,
   fields: string[]
 ): T {
   if (locale !== 'en') return item
-  const clone: Record<string, unknown> = { ...item }
+  const clone = { ...item } as Record<string, unknown>
   for (const field of fields) {
     const enValue = clone[`${field}En`]
     if (typeof enValue === 'string' && enValue.length > 0) {

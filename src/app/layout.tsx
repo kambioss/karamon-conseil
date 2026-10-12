@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://karamon-conseil-sarlu.com"),
 
   title: {
-    default: "KARAMON CONSEIL SARLU — Cabinet environnemental au Togo",
+    default: "KARAMON CONSEIL SARLU | Cabinet environnemental au Togo",
     template: "%s | KARAMON CONSEIL SARLU",
   },
 
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: "https://karamon-conseil-sarlu.com/fr",
     siteName: "KARAMON CONSEIL SARLU",
-    title: "KARAMON CONSEIL SARLU — Cabinet environnemental au Togo",
+    title: "KARAMON CONSEIL SARLU | Cabinet environnemental au Togo",
     description:
       "Cabinet environnemental au Togo, basé à Lomé, spécialisé dans les études environnementales, sociales, la biodiversité, les audits et le développement durable à travers l'Afrique.",
 
@@ -97,7 +97,7 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "KARAMON CONSEIL SARLU — Cabinet environnemental au Togo",
+    title: "KARAMON CONSEIL SARLU | Cabinet environnemental au Togo",
     description:
       "Cabinet environnemental au Togo spécialisé dans les études environnementales et sociales à travers l'Afrique.",
 

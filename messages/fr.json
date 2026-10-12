@@ -7,13 +7,18 @@
     "contact": "Contact",
     "close": "Fermer",
     "themeToggle": "Basculer le thème clair/sombre",
-    "backToTop": "Remonter en haut de page"
+    "backToTop": "Remonter en haut de page",
+    "skipToContent": "Aller au contenu principal",
+    "menu": "Menu",
+    "cta": "Parlons de votre projet",
+    "language": "Langue",
+    "homeCrumb": "Accueil"
   },
   "hero": {
     "badge": "Cabinet d'Expertise Environnementale et Sociale",
     "title1": "Expertise en Études",
     "titleHighlight": "Environnementales et Sociales",
-    "subtitle": "KARAMON CONSEIL SARL — Votre partenaire pour un développement durable en Afrique de l'Ouest",
+    "subtitle": "KARAMON CONSEIL SARL, votre partenaire pour un développement durable en Afrique de l'Ouest",
     "cta1": "Nos Services",
     "cta2": "Contactez-nous"
   },
@@ -78,7 +83,8 @@
     "description": "Description du projet",
     "actions": "Actions menées",
     "results": "Résultats",
-    "inProgress": "En cours"
+    "inProgress": "En cours",
+    "filterLabel": "Filtrer par statut"
   },
   "news": {
     "badge": "Nos Actualités",
@@ -86,7 +92,8 @@
     "subtitle": "Suivez les dernières nouvelles, événements et publications de KARAMON CONSEIL SARL.",
     "readMore": "Lire la suite",
     "backToNews": "Retour aux actualités",
-    "seeAllNews": "Voir toutes les actualités"
+    "seeAllNews": "Voir toutes les actualités",
+    "empty": "Aucune actualité pour le moment."
   },
   "contact": {
     "badge": "Contact",
@@ -128,7 +135,8 @@
     },
     "successTitle": "Message envoyé !",
     "successMessage": "Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.",
-    "sendAnother": "Envoyer un autre message"
+    "sendAnother": "Envoyer un autre message",
+    "requiredHint": "Les champs marqués * sont obligatoires."
   },
   "footer": {
     "description": "Cabinet d'expertise en études environnementales et sociales, au service d'un développement durable en Afrique de l'Ouest.",

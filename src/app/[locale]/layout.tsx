@@ -1,5 +1,5 @@
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Plus_Jakarta_Sans } from 'next/font/google';
@@ -44,6 +44,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const messages = await getMessages();
+  const t = await getTranslations("nav");
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -64,9 +65,15 @@ export default async function LocaleLayout({
           disableTransitionOnChange
         >
           <NextIntlClientProvider messages={messages}>
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-3 focus:text-primary-foreground"
+            >
+              {t("skipToContent")}
+            </a>
             <div className="min-h-screen flex flex-col">
               <Navbar />
-              <main className="flex-1 flex flex-col">{children}</main>
+              <main id="main" tabIndex={-1} className="flex-1 flex flex-col outline-none">{children}</main>
               <Footer />
             </div>
             <BackToTop />

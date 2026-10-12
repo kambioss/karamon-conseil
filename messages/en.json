@@ -7,13 +7,18 @@
     "contact": "Contact",
     "close": "Close",
     "themeToggle": "Toggle light/dark theme",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "skipToContent": "Skip to main content",
+    "menu": "Menu",
+    "cta": "Discuss your project",
+    "language": "Language",
+    "homeCrumb": "Home"
   },
   "hero": {
     "badge": "Environmental and Social Expertise Firm",
     "title1": "Expertise in",
     "titleHighlight": "Environmental and Social Studies",
-    "subtitle": "KARAMON CONSEIL SARL — Your partner for sustainable development in West Africa",
+    "subtitle": "KARAMON CONSEIL SARL, your partner for sustainable development in West Africa",
     "cta1": "Our Services",
     "cta2": "Contact Us"
   },
@@ -78,7 +83,8 @@
     "description": "Project Description",
     "actions": "Actions Taken",
     "results": "Results",
-    "inProgress": "Ongoing"
+    "inProgress": "Ongoing",
+    "filterLabel": "Filter by status"
   },
   "news": {
     "badge": "Our News",
@@ -86,7 +92,8 @@
     "subtitle": "Follow the latest news, events and publications from KARAMON CONSEIL SARL.",
     "readMore": "Read More",
     "backToNews": "Back to News",
-    "seeAllNews": "View All News"
+    "seeAllNews": "View All News",
+    "empty": "No news yet."
   },
   "contact": {
     "badge": "Contact",
@@ -128,7 +135,8 @@
     },
     "successTitle": "Message sent!",
     "successMessage": "Thank you for your message. Our team will get back to you as soon as possible.",
-    "sendAnother": "Send another message"
+    "sendAnother": "Send another message",
+    "requiredHint": "Fields marked * are required."
   },
   "footer": {
     "description": "Environmental and social expertise firm based in Lomé, Togo. We support sustainable development projects in West Africa.",

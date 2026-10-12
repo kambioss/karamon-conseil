@@ -2,19 +2,13 @@ import { getProjectBySlug } from '@/lib/data'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  MapPin,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  ArrowRight,
-  ArrowLeft,
-  ChevronRight,
-} from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
+import { ArrowLeft, ArrowRight, Building2, Calendar, CheckCircle2, MapPin } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+
+import { Button } from '@/components/ui/button'
+import { Breadcrumb } from '@/components/site/page-header'
+import { StatusPill } from '@/components/site/project-card'
+import { formatDate } from '@/components/site/news-card'
 
 export default async function ProjetPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params
@@ -24,204 +18,142 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
   const project = getProjectBySlug(slug, locale)
   if (!project) notFound()
 
-  const dateLocale = locale === 'fr' ? 'fr-FR' : 'en-US'
-
-  const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return t('projects.inProgress')
-    return new Date(dateStr).toLocaleDateString(dateLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })
-  }
-
   let actions: string[] = []
   let results: string[] = []
   try { actions = project.actions ? JSON.parse(project.actions) : [] } catch { /* empty */ }
   try { results = project.results ? JSON.parse(project.results) : [] } catch { /* empty */ }
 
+  const category = t.has(`categories.${project.category}`)
+    ? t(`categories.${project.category}`)
+    : project.category
+
+  const meta = [
+    { icon: MapPin, label: t('projects.location'), value: project.location },
+    { icon: Building2, label: t('projects.client'), value: project.client },
+    {
+      icon: Calendar,
+      label: t('projects.startDate'),
+      value: project.startDate ? formatDate(project.startDate, locale) : t('projects.inProgress'),
+    },
+    {
+      icon: CheckCircle2,
+      label: t('projects.endDate'),
+      value: project.endDate ? formatDate(project.endDate, locale) : t('projects.inProgress'),
+    },
+  ]
+
+  const sectionTitle = 'font-serif text-2xl font-semibold tracking-tight text-foreground md:text-3xl'
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Ambient backdrop */}
-      <div className="relative h-56 sm:h-64 lg:h-72 overflow-hidden bg-primary">
-        {project.image && (
-          <Image
-            src={project.image}
-            alt=""
-            aria-hidden
-            fill
-            sizes="100vw"
-            className="object-cover scale-110 blur-2xl opacity-50"
-          />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/60 to-background" />
-
-        {/* Back button */}
-        <div className="absolute top-20 md:top-24 left-6 z-10 animate-in fade-in slide-in-from-left-4 duration-700">
-          <Link href={`/${locale}/projets`}>
-            <Button variant="secondary" size="sm" className="bg-white/90 hover:bg-white backdrop-blur-sm gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              {t('projects.backToProjects')}
-            </Button>
-          </Link>
+    <article className="bg-background pb-20 md:pb-28">
+      <header className="mx-auto max-w-7xl px-4 pt-28 sm:px-6 md:pt-36 lg:px-8">
+        <Breadcrumb
+          crumbs={[
+            { label: t('nav.homeCrumb'), href: `/${locale}` },
+            { label: t('nav.projects'), href: `/${locale}/projets` },
+            { label: project.title },
+          ]}
+        />
+        <div className="mt-8 flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-border">
+            <StatusPill status={project.status} />
+          </span>
+          <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-foreground">{category}</span>
         </div>
-      </div>
+        <h1 className="mt-5 max-w-4xl font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          {project.title}
+        </h1>
+      </header>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        {/* Framed, correctly-sized image */}
-        {project.image && (
-          <div className="relative -mt-28 sm:-mt-32 lg:-mt-36 mb-8 animate-in fade-in zoom-in-95 duration-700">
-            <div className="relative aspect-[16/9] rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                sizes="(max-width: 1024px) 100vw, 896px"
-                quality={90}
-                className="object-cover"
-                priority
-              />
-            </div>
+      {project.image && (
+        <div className="mx-auto mt-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-[1.75rem] bg-muted ring-1 ring-border lg:aspect-[21/9]">
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              priority
+              quality={90}
+              sizes="(max-width: 1280px) 100vw, 1216px"
+              className="object-cover"
+            />
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Breadcrumb */}
-        <nav
-          className="flex items-center gap-1.5 text-xs text-muted-foreground mb-4 animate-in fade-in duration-700"
-          style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}
-        >
-          <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
-            {t('nav.home')}
-          </Link>
-          <ChevronRight className="h-3 w-3" />
-          <Link href={`/${locale}/projets`} className="hover:text-foreground transition-colors">
-            {t('nav.projects')}
-          </Link>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-foreground/70 line-clamp-1">{project.title}</span>
-        </nav>
+      <div className="mx-auto mt-12 grid max-w-7xl gap-12 px-4 sm:px-6 md:mt-16 lg:grid-cols-12 lg:px-8">
+        <div className="space-y-14 lg:col-span-8">
+          <section aria-labelledby="desc">
+            <h2 id="desc" className={sectionTitle}>{t('projects.description')}</h2>
+            <div className="mt-5 max-w-[68ch] whitespace-pre-line text-base leading-[1.8] text-muted-foreground md:text-[1.05rem]">
+              {project.fullDescription}
+            </div>
+          </section>
 
-        {/* Title block */}
-        <div
-          className="mb-10 animate-in fade-in slide-in-from-bottom-2 duration-700"
-          style={{ animationDelay: '150ms', animationFillMode: 'backwards' }}
-        >
-          <div className="flex flex-wrap gap-2 mb-4">
-            <Badge
-              className={
-                project.status === 'en-cours'
-                  ? 'bg-green-600 text-white border-green-600'
-                  : 'bg-institutional text-white border-institutional'
-              }
+          {actions.length > 0 && (
+            <section aria-labelledby="actions">
+              <h2 id="actions" className={sectionTitle}>{t('projects.actions')}</h2>
+              <ol className="mt-6 divide-y divide-border rounded-2xl border border-border bg-card">
+                {actions.map((action, i) => (
+                  <li key={i} className="flex gap-4 p-5">
+                    <span aria-hidden className="font-mono text-xs leading-6 tracking-widest text-terracotta">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-sm leading-relaxed text-foreground/85 md:text-base">{action}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+
+          {results.length > 0 && (
+            <section aria-labelledby="results">
+              <h2 id="results" className={sectionTitle}>{t('projects.results')}</h2>
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+                {results.map((result, i) => (
+                  <li key={i} className="flex gap-3 rounded-2xl bg-primary/5 p-5 ring-1 ring-primary/10">
+                    <CheckCircle2 aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                    <span className="text-sm leading-relaxed text-foreground/85">{result}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
+
+        <aside className="lg:col-span-4">
+          <div className="space-y-6 lg:sticky lg:top-28">
+            <dl className="divide-y divide-border rounded-2xl border border-border bg-card">
+              {meta.map(({ icon: Icon, label, value }) => (
+                <div key={label} className="flex gap-3 p-5">
+                  <Icon aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                  <div className="min-w-0">
+                    <dt className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{label}</dt>
+                    <dd className="mt-1 text-sm font-medium text-foreground">{value}</dd>
+                  </div>
+                </div>
+              ))}
+            </dl>
+            <div className="rounded-2xl bg-primary p-6 text-primary-foreground">
+              <p className="font-serif text-xl font-semibold">{t('footer.ctaTitle')}</p>
+              <p className="mt-2 text-sm text-primary-foreground/80">{t('footer.ctaSubtitle')}</p>
+              <Button asChild className="mt-5 h-11 w-full rounded-xl bg-primary-foreground text-primary hover:bg-primary-foreground/90">
+                <Link href={`/${locale}#contact`}>
+                  {t('hero.cta2')}
+                  <ArrowRight aria-hidden />
+                </Link>
+              </Button>
+            </div>
+            <Link
+              href={`/${locale}/projets`}
+              className="inline-flex h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              {project.status === 'en-cours' ? (
-                <><CheckCircle2 className="mr-1 h-3 w-3" /> {t('projects.ongoingBadge')}</>
-              ) : (
-                <><CheckCircle2 className="mr-1 h-3 w-3" /> {t('projects.completedBadge')}</>
-              )}
-            </Badge>
-            <Badge variant="secondary">
-              {t(`categories.${project.category}` as any) || project.category}
-            </Badge>
+              <ArrowLeft aria-hidden className="h-4 w-4" />
+              {t('projects.backToProjects')}
+            </Link>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary font-[family-name:var(--font-playfair)] leading-tight">
-            {project.title}
-          </h1>
-        </div>
-
-        {/* Meta info */}
-        <div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10 animate-in fade-in slide-in-from-bottom-2 duration-700"
-          style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}
-        >
-          <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-            <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-            <div>
-              <p className="text-xs text-muted-foreground">{t('projects.location')}</p>
-              <p className="text-sm font-medium">{project.location}</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-            <Building2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-            <div>
-              <p className="text-xs text-muted-foreground">{t('projects.client')}</p>
-              <p className="text-sm font-medium">{project.client}</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-            <Calendar className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-            <div>
-              <p className="text-xs text-muted-foreground">{t('projects.startDate')}</p>
-              <p className="text-sm font-medium">{formatDate(project.startDate)}</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-            <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />
-            <div>
-              <p className="text-xs text-muted-foreground">{t('projects.endDate')}</p>
-              <p className="text-sm font-medium">{formatDate(project.endDate)}</p>
-            </div>
-          </div>
-        </div>
-
-        <Separator className="mb-10" />
-
-        {/* Description */}
-        <div className="mb-10">
-          <h2 className="text-2xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-            {t('projects.description')}
-          </h2>
-          <div className="text-muted-foreground leading-relaxed whitespace-pre-line text-justify">
-            {project.fullDescription}
-          </div>
-        </div>
-
-        {/* Actions */}
-        {actions.length > 0 && (
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t('projects.actions')}
-            </h2>
-            <ul className="space-y-3">
-              {actions.map((action: string, i: number) => (
-                <li key={i} className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-                  <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 shrink-0" />
-                  <span className="text-sm text-muted-foreground">{action}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Results */}
-        {results.length > 0 && (
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold text-primary font-[family-name:var(--font-playfair)] mb-4">
-              {t('projects.results')}
-            </h2>
-            <ul className="space-y-3">
-              {results.map((result: string, i: number) => (
-                <li key={i} className="flex items-start gap-3 p-4 bg-card rounded-xl border border-border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-                  <ArrowRight className="h-5 w-5 text-terracotta mt-0.5 shrink-0" />
-                  <span className="text-sm text-muted-foreground">{result}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        <Separator className="my-10" />
-
-        <div className="text-center">
-          <Link href={`/${locale}/projets`}>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              {t('projects.seeAllProjects')}
-            </Button>
-          </Link>
-        </div>
+        </aside>
       </div>
-    </div>
+    </article>
   )
 }

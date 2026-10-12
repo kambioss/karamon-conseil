@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       from: `"Formulaire de contact" <${process.env.SMTP_USER}>`,
       to: process.env.SMTP_USER, // reçu sur la même adresse
       replyTo: validated.email, // répondre directement au client
-      subject: `[Contact] ${validated.subject} — ${validated.name}`,
+      subject: `[Contact] ${validated.subject} (${validated.name})`,
       html: `
         <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
           <div style="background:#1d4ed8;padding:20px 24px">
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     });
 
     console.log(
-      "📩 Message de contact envoyé par email — de :",
+      "📩 Message de contact envoyé par email, de :",
       validated.email,
     );
 

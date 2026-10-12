@@ -1,37 +1,35 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useTranslations } from "next-intl";
+
+import { cn } from "@/lib/utils";
 
 export function BackToTop() {
   const t = useTranslations();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 600);
+    const handleScroll = () => setVisible(window.scrollY > 800);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.6, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.6, y: 20 }}
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.92 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label={t("nav.backToTop")}
-          className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </motion.button>
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0 })}
+      aria-label={t("nav.backToTop")}
+      tabIndex={visible ? 0 : -1}
+      aria-hidden={!visible}
+      className={cn(
+        "fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-background/90 text-foreground shadow-lg backdrop-blur transition-[opacity,transform] duration-300 hover:bg-muted",
+        visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0",
       )}
-    </AnimatePresence>
+    >
+      <ArrowUp aria-hidden className="h-5 w-5" />
+    </button>
   );
 }
