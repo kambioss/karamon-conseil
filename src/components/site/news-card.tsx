@@ -68,7 +68,7 @@ export function NewsCard({
         </h3>
         <p
           className={cn(
-            "mt-3 text-sm leading-relaxed text-muted-foreground",
+            "mt-3 text-sm leading-relaxed text-muted-foreground hyphens-auto lg:text-justify",
             featured ? "line-clamp-4 md:text-base" : "line-clamp-3",
           )}
         >

@@ -98,14 +98,14 @@
   "contact": {
     "badge": "Contact",
     "title": "Contactez-nous",
-    "subtitle": "Vous avez un projet ou une question ? N'hésitez pas à nous contacter. Notre équipe est à votre écoute.",
+    "subtitle": "Vous avez un projet ou une question ? N'hésitez pas à nous contacter. Notre équipe est à votre écoute.",
     "info": "Informations de contact",
     "address": "Adresse",
     "phone": "Téléphone",
     "email": "Email",
     "area": "Zone d'intervention",
     "areaValue": "Toute l'Afrique",
-    "followUs": "Suivez-nous :",
+    "followUs": "Suivez-nous :",
     "name": "Nom complet",
     "namePlaceholder": "Votre nom complet",
     "emailLabel": "Email",
@@ -133,7 +133,7 @@
       "formation": "Formation & Assistance",
       "other": "Autre"
     },
-    "successTitle": "Message envoyé !",
+    "successTitle": "Message envoyé !",
     "successMessage": "Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.",
     "sendAnother": "Envoyer un autre message",
     "requiredHint": "Les champs marqués * sont obligatoires."
@@ -143,7 +143,7 @@
     "quickLinks": "Liens rapides",
     "services": "Nos Services",
     "rights": "Tous droits réservés.",
-    "ctaTitle": "Un projet en tête ?",
+    "ctaTitle": "Un projet en tête ?",
     "ctaSubtitle": "Parlons de vos besoins en études environnementales et sociales."
   },
   "categories": {

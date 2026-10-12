@@ -39,7 +39,7 @@ const PARTNERS = [
   { name: "BIDC / EBID", logo: "/images/partners/bidc.png" },
 ];
 
-const PHONE = "+228 91 52 26 79";
+const PHONE = "+228\u00a091\u00a052\u00a026\u00a079";
 const EMAIL = "infokaramonconseilsarlu@gmail.com";
 
 export default async function HomePage({
@@ -83,7 +83,7 @@ export default async function HomePage({
               {t("hero.title1")}{" "}
               <em className="font-medium text-primary">{t("hero.titleHighlight")}</em>
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground">
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground hyphens-auto sm:text-justify">
               {t("hero.subtitle")}
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -170,7 +170,7 @@ export default async function HomePage({
             <h2 id="about-title" className="mt-4 font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground md:text-[2.75rem]">
               {t("about.title")}
             </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-[1.05rem]">
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-[1.05rem] hyphens-auto sm:text-justify">
               <p>{t("about.p1")}</p>
               <p>{t("about.p2")}</p>
             </div>
@@ -207,7 +207,7 @@ export default async function HomePage({
                 <h3 className="mt-8 font-serif text-xl font-semibold leading-snug text-foreground md:text-[1.4rem]">
                   {t(`services.${key}.title`)}
                 </h3>
-                <p className="mt-3 text-sm leading-[1.7] text-muted-foreground">
+                <p className="mt-3 text-sm leading-[1.7] text-muted-foreground hyphens-auto lg:text-justify">
                   {t(`services.${key}.desc`)}
                 </p>
               </li>
@@ -288,7 +288,7 @@ export default async function HomePage({
               <h2 id="contact-title" className="mt-4 font-serif text-3xl font-semibold leading-tight md:text-4xl">
                 {t("contact.title")}
               </h2>
-              <p className="mt-4 leading-relaxed text-primary-foreground/80">{t("contact.subtitle")}</p>
+              <p className="mt-4 leading-relaxed text-primary-foreground/80 hyphens-auto sm:text-justify">{t("contact.subtitle")}</p>
               <ul className="mt-10 space-y-6">
                 {contactItems.map(({ icon: Icon, label, value, href }) => (
                   <li key={label} className="flex items-start gap-4">

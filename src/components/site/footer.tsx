@@ -60,7 +60,7 @@ export function Footer() {
                 className="h-10 w-auto"
               />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/75">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/75 hyphens-auto sm:text-justify">
               {t("footer.description")}
             </p>
           </div>
@@ -99,7 +99,7 @@ export function Footer() {
               <li>
                 <a href="tel:+22891522679" className={`flex items-center gap-2.5 ${linkClass}`}>
                   <Phone aria-hidden className="h-4 w-4 shrink-0" />
-                  +228 91 52 26 79
+                  {"+228\u00a091\u00a052\u00a026\u00a079"}
                 </a>
               </li>
               <li>

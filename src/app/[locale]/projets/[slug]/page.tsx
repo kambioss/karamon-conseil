@@ -85,7 +85,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
         <div className="space-y-14 lg:col-span-8">
           <section aria-labelledby="desc">
             <h2 id="desc" className={sectionTitle}>{t('projects.description')}</h2>
-            <div className="mt-5 max-w-[68ch] whitespace-pre-line text-base leading-[1.8] text-muted-foreground md:text-[1.05rem]">
+            <div className="mt-5 max-w-[68ch] whitespace-pre-line text-base leading-[1.8] text-muted-foreground md:text-[1.05rem] hyphens-auto sm:text-justify">
               {project.fullDescription}
             </div>
           </section>
@@ -99,7 +99,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
                     <span aria-hidden className="font-mono text-xs leading-6 tracking-widest text-terracotta">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="text-sm leading-relaxed text-foreground/85 md:text-base">{action}</span>
+                    <span className="text-sm leading-relaxed text-foreground/85 md:text-base hyphens-auto sm:text-justify">{action}</span>
                   </li>
                 ))}
               </ol>
@@ -113,7 +113,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
                 {results.map((result, i) => (
                   <li key={i} className="flex gap-3 rounded-2xl bg-primary/5 p-5 ring-1 ring-primary/10">
                     <CheckCircle2 aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                    <span className="text-sm leading-relaxed text-foreground/85">{result}</span>
+                    <span className="text-sm leading-relaxed text-foreground/85 hyphens-auto lg:text-justify">{result}</span>
                   </li>
                 ))}
               </ul>
