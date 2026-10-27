@@ -38,7 +38,7 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
           {actualite.title}
         </h1>
         {actualite.excerpt && (
-          <p className="mt-6 text-lg leading-relaxed text-muted-foreground hyphens-auto sm:text-justify">{actualite.excerpt}</p>
+          <p className="mt-6 text-lg leading-relaxed text-muted-foreground hyphens-auto text-justify">{actualite.excerpt}</p>
         )}
       </header>
 
@@ -59,7 +59,7 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
       )}
 
       <div className="mx-auto mt-12 max-w-3xl px-4 sm:px-6">
-        <div className="whitespace-pre-line text-base leading-[1.85] text-foreground/85 md:text-lg hyphens-auto sm:text-justify">
+        <div className="whitespace-pre-line text-base leading-[1.85] text-foreground/85 md:text-lg hyphens-auto text-justify">
           {actualite.content}
         </div>
 

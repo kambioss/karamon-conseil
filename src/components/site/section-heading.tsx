@@ -53,7 +53,7 @@ export function SectionHeading({
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg hyphens-auto sm:text-justify">
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg hyphens-auto text-justify">
             {subtitle}
           </p>
         )}

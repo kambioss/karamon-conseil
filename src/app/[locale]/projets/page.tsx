@@ -20,6 +20,12 @@ export default async function ProjetsPage({
     }),
   );
 
+  const stats = [
+    { value: projects.length, label: t("about.statProjects") },
+    { value: projects.filter((p) => p.status === "en-cours").length, label: t("projects.ongoingBadge") },
+    { value: 8, label: t("about.statCountries") },
+  ];
+
   return (
     <div className="bg-background pb-20 md:pb-28">
       <PageHeader
@@ -27,6 +33,16 @@ export default async function ProjetsPage({
         eyebrow={t("projects.badge")}
         title={t("projects.title")}
         subtitle={t("projects.subtitle")}
+        aside={
+          <dl className="grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-border bg-border">
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col-reverse bg-card px-4 py-5">
+                <dt className="mt-1 text-xs leading-snug text-muted-foreground">{s.label}</dt>
+                <dd className="font-serif text-3xl font-semibold text-foreground">{s.value}</dd>
+              </div>
+            ))}
+          </dl>
+        }
       />
       <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 md:pt-16 lg:px-8">
         <ProjectsGrid projects={projects} />

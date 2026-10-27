@@ -46,6 +46,8 @@
   --color-terracotta-foreground: var(--terracotta-foreground);
   --color-institutional: var(--institutional);
   --color-institutional-foreground: var(--institutional-foreground);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
 }
 
 :root {
@@ -90,6 +92,9 @@
   /* Custom: Deep institutional blue #1E3A5F */
   --institutional: oklch(0.35 0.08 250);
   --institutional-foreground: oklch(0.98 0.005 80);
+  /* Custom: Deep forest ink, for the footer and other dark panels */
+  --ink: oklch(0.22 0.05 160);
+  --ink-foreground: oklch(0.97 0.005 80);
   /* Sidebar */
   --sidebar: oklch(0.98 0.005 80);
   --sidebar-foreground: oklch(0.30 0.02 250);
@@ -129,6 +134,8 @@
   --terracotta-foreground: oklch(0.15 0.03 50);
   --institutional: oklch(0.50 0.08 250);
   --institutional-foreground: oklch(0.95 0.005 80);
+  --ink: oklch(0.13 0.025 160);
+  --ink-foreground: oklch(0.95 0.005 80);
   --sidebar: oklch(0.20 0.025 160);
   --sidebar-foreground: oklch(0.95 0.005 80);
   --sidebar-primary: oklch(0.68 0.11 160);

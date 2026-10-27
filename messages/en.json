@@ -84,7 +84,16 @@
     "actions": "Actions Taken",
     "results": "Results",
     "inProgress": "Ongoing",
-    "filterLabel": "Filter by status"
+    "missionType": "Mission type",
+    "started": "Start",
+    "related": "Related projects",
+    "similarTitle": "A similar project?",
+    "similarText": "Our experts can support you on this type of assignment, from scoping to monitoring.",
+    "typeFilterLabel": "Filter by mission type",
+    "statusFilterLabel": "Filter by status",
+    "allTypes": "All types",
+    "resultsCount": "{count, plural, =0 {No projects} one {# project} other {# projects}}",
+    "reset": "Reset"
   },
   "news": {
     "badge": "Our News",
@@ -144,7 +153,10 @@
     "services": "Our Services",
     "rights": "All rights reserved.",
     "ctaTitle": "Have a project in mind?",
-    "ctaSubtitle": "Let's talk about your environmental and social study needs."
+    "ctaSubtitle": "Let's talk about your environmental and social study needs.",
+    "badge": "Get in touch",
+    "since": "Since 2018",
+    "based": "Lomé, Togo · West Africa"
   },
   "categories": {
     "eies": "ESIA",

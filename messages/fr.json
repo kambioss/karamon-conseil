@@ -84,7 +84,16 @@
     "actions": "Actions menées",
     "results": "Résultats",
     "inProgress": "En cours",
-    "filterLabel": "Filtrer par statut"
+    "missionType": "Type de mission",
+    "started": "Démarrage",
+    "related": "Autres projets similaires",
+    "similarTitle": "Un projet similaire ?",
+    "similarText": "Nos experts vous accompagnent sur ce type de mission, du cadrage au suivi.",
+    "typeFilterLabel": "Filtrer par type de mission",
+    "statusFilterLabel": "Filtrer par statut",
+    "allTypes": "Tous les types",
+    "resultsCount": "{count, plural, =0 {Aucun projet} one {# projet} other {# projets}}",
+    "reset": "Réinitialiser"
   },
   "news": {
     "badge": "Nos Actualités",
@@ -144,7 +153,10 @@
     "services": "Nos Services",
     "rights": "Tous droits réservés.",
     "ctaTitle": "Un projet en tête ?",
-    "ctaSubtitle": "Parlons de vos besoins en études environnementales et sociales."
+    "ctaSubtitle": "Parlons de vos besoins en études environnementales et sociales.",
+    "badge": "Prise de contact",
+    "since": "Depuis 2018",
+    "based": "Lomé, Togo · Afrique de l'Ouest"
   },
   "categories": {
     "eies": "EIES",

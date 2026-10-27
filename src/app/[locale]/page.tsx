@@ -83,7 +83,7 @@ export default async function HomePage({
               {t("hero.title1")}{" "}
               <em className="font-medium text-primary">{t("hero.titleHighlight")}</em>
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground hyphens-auto sm:text-justify">
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground hyphens-auto text-justify">
               {t("hero.subtitle")}
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -130,10 +130,13 @@ export default async function HomePage({
               <h2 id="proof-title" className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                 {t("about.trustedBy")}
               </h2>
-              <ul className="mt-6 grid grid-cols-2 items-center gap-x-10 gap-y-8 sm:grid-cols-4 lg:grid-cols-2">
+              <ul className="mt-6 grid grid-cols-2 items-center gap-4 sm:grid-cols-4 lg:grid-cols-2">
                 {PARTNERS.map((p) => (
-                  <li key={p.name} className="relative h-14 opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:brightness-0 dark:invert">
-                    <Image src={p.logo} alt={p.name} fill sizes="140px" className="object-contain object-left" />
+                  <li
+                    key={p.name}
+                    className="relative h-24 rounded-xl bg-white ring-1 ring-border transition-shadow duration-300 hover:shadow-md"
+                  >
+                    <Image src={p.logo} alt={p.name} fill sizes="220px" className="object-contain p-3.5" />
                   </li>
                 ))}
               </ul>
@@ -170,7 +173,7 @@ export default async function HomePage({
             <h2 id="about-title" className="mt-4 font-serif text-3xl font-semibold leading-[1.1] tracking-tight text-foreground md:text-[2.75rem]">
               {t("about.title")}
             </h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-[1.05rem] hyphens-auto sm:text-justify">
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-[1.05rem] hyphens-auto text-justify">
               <p>{t("about.p1")}</p>
               <p>{t("about.p2")}</p>
             </div>
@@ -207,7 +210,7 @@ export default async function HomePage({
                 <h3 className="mt-8 font-serif text-xl font-semibold leading-snug text-foreground md:text-[1.4rem]">
                   {t(`services.${key}.title`)}
                 </h3>
-                <p className="mt-3 text-sm leading-[1.7] text-muted-foreground hyphens-auto lg:text-justify">
+                <p className="mt-3 text-sm leading-[1.7] text-muted-foreground hyphens-auto text-justify">
                   {t(`services.${key}.desc`)}
                 </p>
               </li>
@@ -283,20 +286,20 @@ export default async function HomePage({
       <section id="contact" aria-labelledby="contact-title" className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid overflow-hidden rounded-3xl border border-border bg-card lg:grid-cols-5">
-            <div className="relative bg-primary p-8 text-primary-foreground md:p-12 lg:col-span-2">
-              <Eyebrow className="text-primary-foreground/80">{t("contact.badge")}</Eyebrow>
+            <div className="relative bg-ink p-8 text-ink-foreground md:p-12 lg:col-span-2">
+              <Eyebrow className="text-ink-foreground/80">{t("contact.badge")}</Eyebrow>
               <h2 id="contact-title" className="mt-4 font-serif text-3xl font-semibold leading-tight md:text-4xl">
                 {t("contact.title")}
               </h2>
-              <p className="mt-4 leading-relaxed text-primary-foreground/80 hyphens-auto sm:text-justify">{t("contact.subtitle")}</p>
+              <p className="mt-4 leading-relaxed text-ink-foreground/80 hyphens-auto text-justify">{t("contact.subtitle")}</p>
               <ul className="mt-10 space-y-6">
                 {contactItems.map(({ icon: Icon, label, value, href }) => (
                   <li key={label} className="flex items-start gap-4">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-foreground/10">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-ink-foreground/10">
                       <Icon aria-hidden className="h-5 w-5" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm text-primary-foreground/70">{label}</p>
+                      <p className="text-sm text-ink-foreground/70">{label}</p>
                       {href ? (
                         <a href={href} className="break-words font-medium underline-offset-4 hover:underline">
                           {value}

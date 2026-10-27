@@ -9,26 +9,33 @@ export function PageHeader({
   eyebrow,
   title,
   subtitle,
+  aside,
 }: {
   crumbs: { label: string; href?: string }[];
   eyebrow: string;
   title: string;
   subtitle?: string;
+  aside?: React.ReactNode;
 }) {
   return (
     <section className="relative overflow-hidden border-b border-border pt-28 pb-12 md:pt-36 md:pb-16">
       <div aria-hidden className="bg-grid absolute inset-0" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumb crumbs={crumbs} />
-        <Eyebrow className="mt-8">{eyebrow}</Eyebrow>
-        <h1 className="mt-4 max-w-3xl font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl">
-          {title}
-        </h1>
-        {subtitle && (
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg hyphens-auto sm:text-justify">
-            {subtitle}
-          </p>
-        )}
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <Eyebrow className="mt-8">{eyebrow}</Eyebrow>
+            <h1 className="mt-4 max-w-3xl font-serif text-4xl font-semibold leading-[1.05] tracking-tight text-foreground md:text-6xl">
+              {title}
+            </h1>
+            {subtitle && (
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg hyphens-auto text-justify">
+                {subtitle}
+              </p>
+            )}
+          </div>
+          {aside && <div className="lg:col-span-4">{aside}</div>}
+        </div>
       </div>
     </section>
   );
