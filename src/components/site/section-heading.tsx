@@ -20,8 +20,9 @@ export function Eyebrow({
   );
 }
 
-/** Eyebrow + title + optional lead paragraph, with an optional action
- * (e.g. a "see all" link) aligned to the right on wide screens. */
+/** Eyebrow + title on the left, lead paragraph and optional action on the
+ * right, so the heading row spans the full width instead of hugging the
+ * left edge. Everything stacks below the `lg` breakpoint. */
 export function SectionHeading({
   eyebrow,
   title,
@@ -37,14 +38,16 @@ export function SectionHeading({
   id?: string;
   className?: string;
 }) {
+  const hasAside = Boolean(subtitle || action);
+
   return (
     <div
       className={cn(
-        "reveal mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between",
+        "reveal mb-10 grid gap-6 md:mb-14 lg:grid-cols-12 lg:items-end lg:gap-12",
         className,
       )}
     >
-      <div className="max-w-2xl">
+      <div className={hasAside ? "lg:col-span-7" : "lg:col-span-12 max-w-4xl"}>
         <Eyebrow>{eyebrow}</Eyebrow>
         <h2
           id={id}
@@ -52,13 +55,17 @@ export function SectionHeading({
         >
           {title}
         </h2>
-        {subtitle && (
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg hyphens-auto text-justify">
-            {subtitle}
-          </p>
-        )}
       </div>
-      {action && <div className="shrink-0">{action}</div>}
+      {hasAside && (
+        <div className={cn("lg:col-span-5", !subtitle && "lg:flex lg:justify-end")}>
+          {subtitle && (
+            <p className="text-base leading-relaxed text-muted-foreground md:text-[1.05rem] hyphens-auto text-justify">
+              {subtitle}
+            </p>
+          )}
+          {action && <div className={subtitle ? "mt-6" : ""}>{action}</div>}
+        </div>
+      )}
     </div>
   );
 }

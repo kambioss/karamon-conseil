@@ -17,7 +17,7 @@ export default async function ActualitePage({ params }: { params: Promise<{ loca
   if (!actualite) notFound()
 
   return (
-    <article className="bg-background pb-20 md:pb-28">
+    <article className="bg-background pb-14 md:pb-20">
       <header className="mx-auto max-w-3xl px-4 pt-28 sm:px-6 md:pt-36">
         <Breadcrumb
           crumbs={[

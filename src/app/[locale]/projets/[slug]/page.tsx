@@ -179,7 +179,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
       </article>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="border-t border-border bg-muted/50 py-16 md:py-24">
+        <section aria-labelledby="related-title" className="border-t border-border bg-muted/50 py-14 md:py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               id="related-title"

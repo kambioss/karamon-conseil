@@ -87,7 +87,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: "/images/hero-bg.jpg",
+        url: "/images/og-cover.jpg",
         width: 1200,
         height: 630,
         alt: "KARAMON CONSEIL SARLU",
@@ -101,7 +101,7 @@ export const metadata: Metadata = {
     description:
       "Cabinet environnemental au Togo spécialisé dans les études environnementales et sociales à travers l'Afrique.",
 
-    images: ["/images/hero-bg.jpg"],
+    images: ["/images/og-cover.jpg"],
   },
 
   icons: {

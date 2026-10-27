@@ -16,14 +16,14 @@ export default async function ActualitesPage({
   const [featured, ...rest] = getPublishedActualites(locale);
 
   return (
-    <div className="bg-background pb-20 md:pb-28">
+    <div className="bg-background pb-14 md:pb-20">
       <PageHeader
         crumbs={[{ label: t("nav.homeCrumb"), href: `/${locale}` }, { label: t("nav.news") }]}
         eyebrow={t("news.badge")}
         title={t("news.title")}
         subtitle={t("news.subtitle")}
       />
-      <div className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 md:pt-16 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 md:pt-14 lg:px-8">
         {featured ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <div className="sm:col-span-2 lg:col-span-3">
