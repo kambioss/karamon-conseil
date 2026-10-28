@@ -18,7 +18,7 @@ export function PageHeader({
   aside?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-border pt-28 pb-10 md:pt-36 md:pb-14">
+    <section className="relative overflow-hidden border-b border-border pt-28 pb-8 md:pt-36 md:pb-12">
       <div aria-hidden className="bg-grid absolute inset-0" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumb crumbs={crumbs} />

@@ -71,7 +71,7 @@ export default async function HomePage({
   return (
     <>
       {/* ═══════════ HERO ═══════════ */}
-      <section id="accueil" className="relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20">
+      <section id="accueil" className="relative overflow-hidden pt-28 pb-10 md:pt-36 md:pb-14">
         <div aria-hidden className="bg-grid absolute inset-0" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:gap-12 lg:px-8">
           <div className="lg:col-span-6 animate-in fade-in slide-in-from-bottom-3 duration-700">
@@ -123,7 +123,7 @@ export default async function HomePage({
       </section>
 
       {/* ═══════════ PROOF: partners + figures ═══════════ */}
-      <section aria-labelledby="proof-title" className="border-y border-border bg-card/50 py-10 md:py-12">
+      <section aria-labelledby="proof-title" className="border-y border-border bg-card/50 py-8 md:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-10 lg:grid-cols-12">
             <div className="lg:col-span-5">
@@ -154,7 +154,7 @@ export default async function HomePage({
       </section>
 
       {/* ═══════════ ABOUT ═══════════ */}
-      <section id="apropos" aria-labelledby="about-title" className="py-14 md:py-20">
+      <section id="apropos" aria-labelledby="about-title" className="py-10 md:py-14">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
           <div className="reveal relative order-2 lg:order-1">
             <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-muted ring-1 ring-border">
@@ -188,7 +188,7 @@ export default async function HomePage({
       </section>
 
       {/* ═══════════ SERVICES ═══════════ */}
-      <section id="services" aria-labelledby="services-title" className="bg-muted/50 py-14 md:py-20">
+      <section id="services" aria-labelledby="services-title" className="bg-muted/50 py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             id="services-title"
@@ -220,7 +220,7 @@ export default async function HomePage({
       </section>
 
       {/* ═══════════ PROJECTS ═══════════ */}
-      <section id="projets" aria-labelledby="projects-title" className="py-14 md:py-20">
+      <section id="projets" aria-labelledby="projects-title" className="py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             id="projects-title"
@@ -252,7 +252,7 @@ export default async function HomePage({
 
       {/* ═══════════ NEWS ═══════════ */}
       {news.length > 0 && (
-        <section id="actualites" aria-labelledby="news-title" className="border-t border-border bg-muted/50 py-14 md:py-20">
+        <section id="actualites" aria-labelledby="news-title" className="border-t border-border bg-muted/50 py-10 md:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               id="news-title"
@@ -283,7 +283,7 @@ export default async function HomePage({
       )}
 
       {/* ═══════════ CONTACT ═══════════ */}
-      <section id="contact" aria-labelledby="contact-title" className="py-14 md:py-20">
+      <section id="contact" aria-labelledby="contact-title" className="py-10 md:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid overflow-hidden rounded-3xl border border-border bg-card lg:grid-cols-5">
             <div className="relative bg-ink p-8 text-ink-foreground md:p-12 lg:col-span-2">

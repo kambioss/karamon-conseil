@@ -43,7 +43,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "reveal mb-10 grid gap-6 md:mb-14 lg:grid-cols-12 lg:items-end lg:gap-12",
+        "reveal mb-8 grid gap-6 md:mb-10 lg:grid-cols-12 lg:items-end lg:gap-12",
         className,
       )}
     >

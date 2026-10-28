@@ -63,7 +63,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
 
   return (
     <>
-      <article className="bg-background pb-16 md:pb-24">
+      <article className="bg-background pb-10 md:pb-14">
         <header className="relative overflow-hidden border-b border-border pt-28 md:pt-36">
           <div aria-hidden className="bg-grid absolute inset-0" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -179,7 +179,7 @@ export default async function ProjetPage({ params }: { params: Promise<{ locale:
       </article>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="border-t border-border bg-muted/50 py-14 md:py-20">
+        <section aria-labelledby="related-title" className="border-t border-border bg-muted/50 py-10 md:py-14">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionHeading
               id="related-title"

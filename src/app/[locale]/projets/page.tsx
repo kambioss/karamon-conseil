@@ -27,7 +27,7 @@ export default async function ProjetsPage({
   ];
 
   return (
-    <div className="bg-background pb-14 md:pb-20">
+    <div className="bg-background pb-8 md:pb-12">
       <PageHeader
         crumbs={[{ label: t("nav.homeCrumb"), href: `/${locale}` }, { label: t("nav.projects") }]}
         eyebrow={t("projects.badge")}
@@ -44,7 +44,7 @@ export default async function ProjetsPage({
           </dl>
         }
       />
-      <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 md:pt-14 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-8 sm:px-6 md:pt-10 lg:px-8">
         <ProjectsGrid projects={projects} />
       </div>
     </div>
